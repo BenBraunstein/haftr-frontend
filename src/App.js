@@ -3,6 +3,7 @@ import logo from "./logo.svg"
 import "./App.css"
 import { useSelector, useDispatch } from "react-redux"
 import { fetchAlumni } from "./actions"
+import AlumniTable from "./AlumiTable"
 
 function App() {
   let state = useSelector((state) => state)
@@ -16,7 +17,7 @@ function App() {
       })
   }, [])
 
-  return <div className="App">Testing...</div>
+  return <div className="App">{<AlumniTable />}</div>
 }
 
 export default App
