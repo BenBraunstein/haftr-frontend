@@ -1,5 +1,5 @@
 import React from "react"
-import { Table, Button, Icon } from "semantic-ui-react"
+import { Table, Button, Icon, Header } from "semantic-ui-react"
 import TableRow from "./TableRow"
 import { useSelector } from "react-redux"
 
@@ -17,6 +17,7 @@ function AlumniTable() {
 
   return (
     <div>
+      <Header as="h2">Alumni Table</Header>
       <Table id="alumni-table" celled>
         <Table.Header>
           <Table.Row>
@@ -25,7 +26,6 @@ function AlumniTable() {
             <Table.HeaderCell>Cell Phone Number</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
-
         <Table.Body>{allAlumniRows}</Table.Body>
         <Table.Footer fullWidth>
           <Table.Row>
