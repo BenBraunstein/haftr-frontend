@@ -4,6 +4,7 @@ import "./App.css"
 import { useSelector, useDispatch } from "react-redux"
 import { fetchAlumni } from "./actions"
 import AlumniTable from "./AlumiTable"
+import NavBar from "./NavBar"
 
 function App() {
   let state = useSelector((state) => state)
@@ -17,7 +18,12 @@ function App() {
       })
   }, [])
 
-  return <div className="App">{<AlumniTable />}</div>
+  return (
+    <div className="App">
+      {<NavBar />}
+      {/* {<AlumniTable />} */}
+    </div>
+  )
 }
 
 export default App
