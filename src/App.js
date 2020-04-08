@@ -1,10 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react"
+import logo from "./logo.svg"
+import "./App.css"
+import { useSelector, useDispatch } from "react-redux"
+import { fetchAlumni } from "./actions"
 
 function App() {
+  let state = useSelector((state) => state)
+  const dispatch = useDispatch()
 
+  useEffect(() => {
+    fetch(`${state.fetchUrl}/alumnis`)
+      .then((resp) => resp.json())
+      .then((data) => {
+        dispatch(fetchAlumni(data))
+      })
+  }, [])
 
+  console.log(state.allAlumni)
 
   return (
     <div className="App">
@@ -23,7 +35,7 @@ function App() {
         </a>
       </header>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
