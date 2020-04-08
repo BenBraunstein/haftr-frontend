@@ -1,5 +1,5 @@
 import React from "react"
-import { Table } from "semantic-ui-react"
+import { Table, Button, Icon } from "semantic-ui-react"
 import TableRow from "./TableRow"
 import { useSelector } from "react-redux"
 
@@ -8,6 +8,7 @@ function AlumniTable() {
 
   const allAlumniRows = state.allAlumni.map((alum) => (
     <TableRow
+      key={`alum${alum.id}`}
       name={`${alum.firstName} ${alum.lastName}`}
       email={alum.emailAddress}
       cellPhone={alum.cellPhone}
@@ -25,14 +26,22 @@ function AlumniTable() {
           </Table.Row>
         </Table.Header>
 
-        <Table.Body>
-          {/* <Table.Row>
-            <Table.Cell>Ben</Table.Cell>
-            <Table.Cell>Ben Email</Table.Cell>
-            <Table.Cell>Ben Cell</Table.Cell>
-          </Table.Row> */}
-          {allAlumniRows}
-        </Table.Body>
+        <Table.Body>{allAlumniRows}</Table.Body>
+        <Table.Footer fullWidth>
+          <Table.Row>
+            <Table.HeaderCell colSpan="3">
+              <Button
+                floated="right"
+                icon
+                labelPosition="left"
+                primary
+                size="small"
+              >
+                <Icon name="user" /> Add Alumni
+              </Button>
+            </Table.HeaderCell>
+          </Table.Row>
+        </Table.Footer>
       </Table>
     </div>
   )
