@@ -1,9 +1,8 @@
 import React, { useEffect } from "react"
-import logo from "./logo.svg"
 import "./App.css"
 import { useSelector, useDispatch } from "react-redux"
 import { fetchAlumni } from "./actions"
-import AlumniTable from "./AlumiTable"
+import AlumniTable from "./AlumniTable"
 import NavBar from "./NavBar"
 
 function App() {
@@ -15,6 +14,7 @@ function App() {
       .then((resp) => resp.json())
       .then((data) => {
         dispatch(fetchAlumni(data))
+        console.log(data)
       })
   }, [])
 
