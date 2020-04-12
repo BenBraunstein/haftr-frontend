@@ -16,7 +16,7 @@ function App() {
         dispatch(fetchAlumni(data))
         console.log(data)
       })
-  }, [])
+  }, [state.fetchUrl, dispatch])
 
   return (
     <div className="App">

@@ -7,12 +7,7 @@ function AlumniTable() {
   let state = useSelector((state) => state)
 
   const allAlumniRows = state.allAlumni.map((alum) => (
-    <TableRow
-      key={`alum${alum.id}`}
-      name={`${alum.firstName} ${alum.lastName}`}
-      email={alum.emailAddress}
-      cellPhone={alum.cellPhone}
-    />
+    <TableRow key={`alum${alum.id}`} alumInfo={alum} />
   ))
 
   return (
