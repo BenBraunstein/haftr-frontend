@@ -6,7 +6,13 @@ import { useSelector } from "react-redux"
 function AlumniTable() {
   let state = useSelector((state) => state)
 
-  const allAlumniRows = state.allAlumni.map((alum) => (
+  const matchingAlum = state.allAlumni.filter((alum) =>
+    `${alum.firstName} ${alum.middleName} ${alum.lastName}`
+      .toLowerCase()
+      .includes(state.searchBarText.toLowerCase())
+  )
+
+  const matchingAlumniRows = matchingAlum.map((alum) => (
     <TableRow key={`alum${alum.id}`} alumInfo={alum} />
   ))
 
@@ -21,7 +27,7 @@ function AlumniTable() {
             <Table.HeaderCell>Cell Phone Number</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
-        <Table.Body>{allAlumniRows}</Table.Body>
+        <Table.Body>{matchingAlumniRows}</Table.Body>
         <Table.Footer fullWidth>
           <Table.Row>
             <Table.HeaderCell colSpan="3">

@@ -5,4 +5,11 @@ const fetchAlumni = (alumniResponse) => {
   }
 }
 
-export { fetchAlumni }
+const updateSearchText = (newSearchText) => {
+  return {
+    type: "UPDATE_SEARCH_TEXT",
+    payload: newSearchText,
+  }
+}
+
+export { fetchAlumni, updateSearchText }
