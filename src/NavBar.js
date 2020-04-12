@@ -2,7 +2,7 @@ import React from "react"
 import { Menu, Input } from "semantic-ui-react"
 import haftrLogo from "./school-logo-dark.png"
 import { useDispatch } from "react-redux"
-import { updateSearchText, openNewAlumniModal } from "./actions"
+import { updateSearchText } from "./actions"
 import NewAlumniModal from "./NewAlumniModal"
 
 function NavBar() {
