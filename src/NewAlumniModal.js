@@ -12,7 +12,7 @@ function NewAlumniModal() {
       <Modal.Header>Add A New Alum</Modal.Header>
       <Modal.Content>
         <Form onSubmit={handleNewAlumSubmit}>
-          <Form.Group>
+          <Form.Group className="school-attended-checkbox">
             <Form.Input label="HILLEL" name="hillel" type="checkbox" />
             <Form.Input label="HILI" name="hili" type="checkbox" />
             <Form.Input label="HAFTR" name="haftr" type="checkbox" />
