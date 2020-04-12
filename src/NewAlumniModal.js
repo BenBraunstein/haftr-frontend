@@ -2,11 +2,69 @@ import React, { useState } from "react"
 import { Modal, Menu, Button, Form, Checkbox, Header } from "semantic-ui-react"
 import SemanticDatepicker from "react-semantic-ui-datepickers"
 import "react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css"
+import { useDispatch, useSelector } from "react-redux"
 
 function NewAlumniModal() {
+  let state = useSelector((state) => state)
+  const dispatch = useDispatch()
+
   const handleNewAlumSubmit = (e) => {
     e.preventDefault()
-    console.log(e.target)
+    const form = e.target
+    const newAlumInfo = {
+      hillel: form.hillel.checked,
+      hili: form.hili.checked,
+      haftr: form.haftr.checked,
+      birthday: currentDate,
+      firstName: form.firstName.value,
+      middleName: form.middleName.value,
+      lastName: form.lastName.value,
+      marriedName: form.marriedName.value,
+      motherName: form.motherName.value,
+      fatherName: form.fatherName.value,
+      currentAddress: form.currentAddress.value,
+      homePhone: form.homePhone.value,
+      cellPhone: form.cellPhone.value,
+      workPhone: form.workPhone.value,
+      emailAddress: form.emailAddress.value,
+      clubs: form.clubs.value,
+      awards: form.awards.value,
+      hillelDayAttended: form.hillelDayAttended.checked,
+      hillelSleepAttended: form.hillelSleepAttended.checked,
+      hillelDayYears: form.hillelDayYears.value,
+      hillelSleepYears: form.hillelSleepYears.value,
+      hillelDayCamper: form.hillelDayCamper.checked,
+      hillelSleepCamper: form.hillelSleepCamper.checked,
+      hillelDayCounselor: form.hillelDayCounselor.checked,
+      hillelSleepCounselor: form.hillelSleepCounselor.checked,
+      hillelDaySpecialty: form.hillelDaySpecialty.value,
+      hillelSleepSpecialty: form.hillelSleepSpecialty.value,
+      classParent: form.classParent.checked,
+      boardTrustee: form.boardTrustee.checked,
+      boardEducation: form.boardEducation.checked,
+      committees: form.committees.value,
+      alumniNewsletters: form.alumniNewsletters.checked,
+      commsOutreach: form.commsOutreach.checked,
+      classReunions: form.classReunions.checked,
+      alumniEvents: form.alumniEvents.checked,
+      fundraisingNetworking: form.fundraisingNetworking.checked,
+      databaseReasearch: form.databaseReasearch.checked,
+      alumniChoir: form.alumniChoir.checked,
+    }
+    console.log(newAlumInfo)
+    fetch(`${state.fetchUrl}/alumnis`, {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newAlumInfo),
+    })
+      .then((resp) => resp.json())
+      .then((newAlumResponse) => {
+        console.log(newAlumResponse)
+        // Dispatch to update Alumni List
+      })
   }
 
   const [currentDate, setNewDate] = useState(null)
@@ -247,11 +305,6 @@ function NewAlumniModal() {
           <Form.Group widths="equal">
             <Checkbox
               className="semantic-checkbox"
-              label="Coordinating and or Hosting Alumni Events"
-              name="alumniEvents"
-            />
-            <Checkbox
-              className="semantic-checkbox"
               label="Fundraising and Networking Initiatives"
               name="fundraisingNetworking"
             />
@@ -266,15 +319,12 @@ function NewAlumniModal() {
               name="alumniChoir"
             />
           </Form.Group>
+          <Button type="submit" positive>
+            Save
+          </Button>
+          <Button negative>Cancel</Button>
         </Form>
       </Modal.Content>
-      <Modal.Actions>
-        <Button.Group>
-          <Button positive>Save</Button>
-          <Button.Or />
-          <Button negative>Cancel</Button>
-        </Button.Group>
-      </Modal.Actions>
     </Modal>
   )
 }
