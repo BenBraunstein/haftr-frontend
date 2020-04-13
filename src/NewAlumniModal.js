@@ -40,14 +40,29 @@ function NewAlumniModal(props) {
       awards: form.awards.value,
       hillelDayAttended: form.hillelDayAttended.checked,
       hillelSleepAttended: form.hillelSleepAttended.checked,
+      hiliDayAttended: form.hiliDayAttended.checked,
+      hiliWhiteAttended: form.hiliWhiteAttended.checked,
+      hiliInternationalAttended: form.hiliInternationalAttended.checked,
       hillelDayYears: form.hillelDayYears.value,
       hillelSleepYears: form.hillelSleepYears.value,
+      hiliDayYears: form.hiliDayYears.value,
+      hiliWhiteYears: form.hiliWhiteYears.value,
+      hiliInternationalYears: form.hiliInternationalYears.value,
       hillelDayCamper: form.hillelDayCamper.checked,
       hillelSleepCamper: form.hillelSleepCamper.checked,
+      hiliDayCamper: form.hiliDayCamper.checked,
+      hiliWhiteCamper: form.hiliWhiteCamper.checked,
+      hiliInternationalCamper: form.hiliInternationalCamper.checked,
       hillelDayCounselor: form.hillelDayCounselor.checked,
       hillelSleepCounselor: form.hillelSleepCounselor.checked,
+      hiliDayCounselor: form.hiliDayCounselor.checked,
+      hiliWhiteCounselor: form.hiliWhiteCounselor.checked,
+      hiliInternationalCounselor: form.hiliInternationalCounselor.checked,
       hillelDaySpecialty: form.hillelDaySpecialty.value,
       hillelSleepSpecialty: form.hillelSleepSpecialty.value,
+      hiliDaySpecialty: form.hiliDaySpecialty.value,
+      hiliWhiteSpecialty: form.hiliWhiteSpecialty.value,
+      hiliInternationalSpecialty: form.hiliInternationalSpecialty.value,
       classParent: form.classParent.checked,
       boardTrustee: form.boardTrustee.checked,
       boardEducation: form.boardEducation.checked,
@@ -289,6 +304,83 @@ function NewAlumniModal(props) {
               label="Specialty"
               placeholder="Specialty"
               name="hillelSleepSpecialty"
+            />
+          </Form.Group>
+          <Form.Group>
+            <Checkbox
+              className="semantic-checkbox"
+              label="HILI Day Camp"
+              name="hiliDayAttended"
+            />
+            <Form.Input label="Years" placeholder="Years" name="hiliDayYears" />
+            <Checkbox
+              className="semantic-checkbox"
+              label="Camper"
+              name="hiliDayCamper"
+            />
+            <Checkbox
+              className="semantic-checkbox"
+              label="Counselor"
+              name="hiliDayCounselor"
+            />
+            <Form.Input
+              label="Specialty"
+              placeholder="Specialty"
+              name="hiliDaySpecialty"
+            />
+          </Form.Group>
+          <Form.Group>
+            <Checkbox
+              className="semantic-checkbox"
+              label="HILI White Lake"
+              name="hiliWhiteAttended"
+            />
+            <Form.Input
+              label="Years"
+              placeholder="Years"
+              name="hiliWhiteYears"
+            />
+            <Checkbox
+              className="semantic-checkbox"
+              label="Camper"
+              name="hiliWhiteCamper"
+            />
+            <Checkbox
+              className="semantic-checkbox"
+              label="Counselor"
+              name="hiliWhiteCounselor"
+            />
+            <Form.Input
+              label="Specialty"
+              placeholder="Specialty"
+              name="hiliWhiteSpecialty"
+            />
+          </Form.Group>
+          <Form.Group>
+            <Checkbox
+              className="semantic-checkbox"
+              label="HILI International"
+              name="hiliInternationalAttended"
+            />
+            <Form.Input
+              label="Years"
+              placeholder="Years"
+              name="hiliInternationalYears"
+            />
+            <Checkbox
+              className="semantic-checkbox"
+              label="Camper"
+              name="hiliInternationalCamper"
+            />
+            <Checkbox
+              className="semantic-checkbox"
+              label="Counselor"
+              name="hiliInternationalCounselor"
+            />
+            <Form.Input
+              label="Specialty"
+              placeholder="Specialty"
+              name="hiliInternationalSpecialty"
             />
           </Form.Group>
           <Header as="h3">Past or Current?</Header>
