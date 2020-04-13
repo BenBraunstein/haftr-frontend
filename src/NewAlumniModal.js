@@ -52,7 +52,6 @@ function NewAlumniModal() {
       databaseReasearch: form.databaseReasearch.checked,
       alumniChoir: form.alumniChoir.checked,
     }
-    console.log(newAlumInfo)
     fetch(`${state.fetchUrl}/alumnis`, {
       method: "POST",
       headers: {
@@ -63,16 +62,24 @@ function NewAlumniModal() {
     })
       .then((resp) => resp.json())
       .then((newAlumResponse) => {
-        console.log(newAlumResponse)
         dispatch(addAlum(newAlumResponse))
+        changeModalOpen(false)
       })
   }
 
+  const [modalOpen, changeModalOpen] = useState(false)
   const [currentDate, setNewDate] = useState(null)
   const onDatePickerChange = (event, data) => setNewDate(data.value)
 
   return (
-    <Modal trigger={<Menu.Item name="new_alum">New Alumni</Menu.Item>}>
+    <Modal
+      open={modalOpen}
+      trigger={
+        <Menu.Item name="new_alum" onClick={() => changeModalOpen(true)}>
+          New Alumni
+        </Menu.Item>
+      }
+    >
       <Modal.Header>Add a New Alum</Modal.Header>
       <Modal.Content>
         <Form onSubmit={handleNewAlumSubmit}>
@@ -323,7 +330,9 @@ function NewAlumniModal() {
           <Button type="submit" positive>
             Save
           </Button>
-          <Button negative>Cancel</Button>
+          <Button negative onClick={() => changeModalOpen(false)}>
+            Cancel
+          </Button>
         </Form>
       </Modal.Content>
     </Modal>

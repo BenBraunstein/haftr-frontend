@@ -25,12 +25,15 @@ function AlumniTable() {
             <Table.HeaderCell>Name</Table.HeaderCell>
             <Table.HeaderCell>Email Address</Table.HeaderCell>
             <Table.HeaderCell>Cell Phone Number</Table.HeaderCell>
+            <Table.HeaderCell>HILLEL</Table.HeaderCell>
+            <Table.HeaderCell>HILI</Table.HeaderCell>
+            <Table.HeaderCell>HAFTR</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>{matchingAlumniRows}</Table.Body>
         <Table.Footer fullWidth>
           <Table.Row>
-            <Table.HeaderCell colSpan="3">
+            <Table.HeaderCell colSpan="6">
               <Button
                 floated="right"
                 icon
