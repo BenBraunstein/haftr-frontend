@@ -67,6 +67,12 @@ function NewAlumniModal() {
       })
   }
 
+  const handleEnterClick = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault()
+    }
+  }
+
   const [modalOpen, changeModalOpen] = useState(false)
   const [currentDate, setNewDate] = useState(null)
   const onDatePickerChange = (event, data) => setNewDate(data.value)
@@ -82,7 +88,7 @@ function NewAlumniModal() {
     >
       <Modal.Header>Add a New Alum</Modal.Header>
       <Modal.Content>
-        <Form onSubmit={handleNewAlumSubmit}>
+        <Form onSubmit={handleNewAlumSubmit} onKeyDown={handleEnterClick}>
           <Form.Group className="school-attended-checkbox" widths="equal">
             <label>Schools Attended</label>
             <Checkbox
