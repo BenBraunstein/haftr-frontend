@@ -12,6 +12,7 @@ import SemanticDatepicker from "react-semantic-ui-datepickers"
 import "react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css"
 import { useDispatch, useSelector } from "react-redux"
 import { addAlum } from "./actions"
+import NewSibling from "./NewSibling"
 
 function NewAlumniModal(props) {
   let state = useSelector((state) => state)
@@ -20,6 +21,17 @@ function NewAlumniModal(props) {
   const handleNewAlumSubmit = (e) => {
     e.preventDefault()
     const form = e.target
+    // Grab all siblings and their info
+    let siblingInfo = []
+    let childrenInfo = []
+    for (let i = 1; i <= siblingCount.length; i++) {
+      siblingInfo.push({
+        name: form[`sibling${i}Name`].value,
+        yearFinished: form[`sibling${i}Year`].value,
+        school: form[`sibling${i}School`].value,
+      })
+    }
+
     const newAlumInfo = {
       hillel: form.hillel.checked,
       hili: form.hili.checked,
@@ -74,6 +86,7 @@ function NewAlumniModal(props) {
       fundraisingNetworking: form.fundraisingNetworking.checked,
       databaseReasearch: form.databaseReasearch.checked,
       alumniChoir: form.alumniChoir.checked,
+      siblings: siblingInfo,
     }
     fetch(`${state.fetchUrl}/alumnis`, {
       method: "POST",
@@ -96,6 +109,7 @@ function NewAlumniModal(props) {
     }
   }
 
+  const [siblingCount, changeSiblingCount] = useState([])
   const [modalOpen, changeModalOpen] = useState(false)
   const [currentDate, setNewDate] = useState(null)
   const onDatePickerChange = (event, data) => setNewDate(data.value)
@@ -226,6 +240,19 @@ function NewAlumniModal(props) {
             placeholder="Awards"
             name="awards"
           />
+          <Header as="h3">Siblings</Header>
+          <Button
+            type="button"
+            onClick={() =>
+              changeSiblingCount([
+                ...siblingCount,
+                <NewSibling count={siblingCount.length + 1} />,
+              ])
+            }
+          >
+            Add Sibling
+          </Button>
+          {siblingCount}
           <Header as="h3">Schools and Profession</Header>
           <Form.Group widths="equal">
             <Form.Input
@@ -383,6 +410,8 @@ function NewAlumniModal(props) {
               name="hiliInternationalSpecialty"
             />
           </Form.Group>
+          <Header as="h3">Children</Header>
+          <Button type="button">Add Child</Button>
           <Header as="h3">Past or Current?</Header>
           <Form.Group>
             <Checkbox

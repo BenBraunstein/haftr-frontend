@@ -1,5 +1,5 @@
 import React from "react"
-import { Table, Icon, Label } from "semantic-ui-react"
+import { Table, Icon } from "semantic-ui-react"
 
 function TableRow(props) {
   function formatPhoneNumber(phoneNumberString) {
