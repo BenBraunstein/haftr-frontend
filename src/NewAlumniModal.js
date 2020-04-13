@@ -3,6 +3,7 @@ import { Modal, Menu, Button, Form, Checkbox, Header } from "semantic-ui-react"
 import SemanticDatepicker from "react-semantic-ui-datepickers"
 import "react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css"
 import { useDispatch, useSelector } from "react-redux"
+import { addAlum } from "./actions"
 
 function NewAlumniModal() {
   let state = useSelector((state) => state)
@@ -63,7 +64,7 @@ function NewAlumniModal() {
       .then((resp) => resp.json())
       .then((newAlumResponse) => {
         console.log(newAlumResponse)
-        // Dispatch to update Alumni List
+        dispatch(addAlum(newAlumResponse))
       })
   }
 

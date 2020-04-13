@@ -12,4 +12,11 @@ const updateSearchText = (newSearchText) => {
   }
 }
 
-export { fetchAlumni, updateSearchText }
+const addAlum = (newAlum) => {
+  return {
+    type: "ADD_NEW_ALUM",
+    payload: newAlum,
+  }
+}
+
+export { fetchAlumni, updateSearchText, addAlum }

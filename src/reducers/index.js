@@ -6,6 +6,8 @@ const rootReducer = (state = defaultState, action) => {
       return { ...state, allAlumni: action.payload }
     case "UPDATE_SEARCH_TEXT":
       return { ...state, searchBarText: action.payload }
+    case "ADD_NEW_ALUM":
+      return { ...state, allAlumni: [...state.allAlumni, action.payload] }
     default:
       return state
   }
