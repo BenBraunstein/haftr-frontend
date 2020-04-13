@@ -15,7 +15,8 @@ function NavBar() {
           <img src={haftrLogo} alt="haftr-logo" style={{ width: "10vmin" }} />
         </Menu.Item>
         <Menu.Item name="all_alumni">All Alumni</Menu.Item>
-        {<NewAlumniModal />}
+        {/* Will appear as Nav Button */}
+        {<NewAlumniModal fromNav />}
         <Menu.Menu position="right">
           <Menu.Item>
             <Input

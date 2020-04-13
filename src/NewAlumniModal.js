@@ -1,11 +1,19 @@
 import React, { useState } from "react"
-import { Modal, Menu, Button, Form, Checkbox, Header } from "semantic-ui-react"
+import {
+  Modal,
+  Menu,
+  Button,
+  Form,
+  Checkbox,
+  Header,
+  Icon,
+} from "semantic-ui-react"
 import SemanticDatepicker from "react-semantic-ui-datepickers"
 import "react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css"
 import { useDispatch, useSelector } from "react-redux"
 import { addAlum } from "./actions"
 
-function NewAlumniModal() {
+function NewAlumniModal(props) {
   let state = useSelector((state) => state)
   const dispatch = useDispatch()
 
@@ -81,9 +89,22 @@ function NewAlumniModal() {
     <Modal
       open={modalOpen}
       trigger={
-        <Menu.Item name="new_alum" onClick={() => changeModalOpen(true)}>
-          New Alumni
-        </Menu.Item>
+        props.fromNav ? (
+          <Menu.Item name="new_alum" onClick={() => changeModalOpen(true)}>
+            New Alumni
+          </Menu.Item>
+        ) : (
+          <Button
+            floated="right"
+            icon
+            labelPosition="left"
+            primary
+            size="small"
+            onClick={() => changeModalOpen(true)}
+          >
+            <Icon name="user" /> Add Alumni
+          </Button>
+        )
       }
     >
       <Modal.Header>Add a New Alum</Modal.Header>

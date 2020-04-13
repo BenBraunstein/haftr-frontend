@@ -2,6 +2,7 @@ import React from "react"
 import { Table, Button, Icon, Header } from "semantic-ui-react"
 import TableRow from "./TableRow"
 import { useSelector } from "react-redux"
+import NewAlumniModal from "./NewAlumniModal"
 
 function AlumniTable() {
   let state = useSelector((state) => state)
@@ -34,15 +35,8 @@ function AlumniTable() {
         <Table.Footer fullWidth>
           <Table.Row>
             <Table.HeaderCell colSpan="6">
-              <Button
-                floated="right"
-                icon
-                labelPosition="left"
-                primary
-                size="small"
-              >
-                <Icon name="user" /> Add Alumni
-              </Button>
+              {/* Will Show as Button with Icon */}
+              <NewAlumniModal />
             </Table.HeaderCell>
           </Table.Row>
         </Table.Footer>
