@@ -1,5 +1,5 @@
 import React from "react"
-import { Table, Checkbox } from "semantic-ui-react"
+import { Table, Icon } from "semantic-ui-react"
 
 function TableRow(props) {
   function formatPhoneNumber(phoneNumberString) {
@@ -23,23 +23,23 @@ function TableRow(props) {
       <Table.Cell>{formatPhoneNumber(props.alumInfo.cellPhone)}</Table.Cell>
       <Table.Cell>
         {props.alumInfo.hillel ? (
-          <Checkbox defaultChecked readOnly />
+          <Icon name="checkmark" />
         ) : (
-          <Checkbox readOnly />
+          <Icon name="close" />
         )}
       </Table.Cell>
       <Table.Cell>
         {props.alumInfo.hili ? (
-          <Checkbox defaultChecked readOnly />
+          <Icon name="checkmark" />
         ) : (
-          <Checkbox readOnly />
+          <Icon name="close" />
         )}
       </Table.Cell>
       <Table.Cell>
         {props.alumInfo.haftr ? (
-          <Checkbox defaultChecked readOnly />
+          <Icon name="checkmark" />
         ) : (
-          <Checkbox readOnly />
+          <Icon name="close" />
         )}
       </Table.Cell>
     </Table.Row>

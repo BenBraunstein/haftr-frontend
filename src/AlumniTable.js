@@ -1,5 +1,5 @@
 import React from "react"
-import { Table, Button, Icon, Header } from "semantic-ui-react"
+import { Table, Header } from "semantic-ui-react"
 import TableRow from "./TableRow"
 import { useSelector } from "react-redux"
 import NewAlumniModal from "./NewAlumniModal"
