@@ -25,11 +25,13 @@ function NewAlumniModal(props) {
     let siblingInfo = []
     let childrenInfo = []
     for (let i = 1; i <= siblingCount.length; i++) {
-      siblingInfo.push({
-        name: form[`sibling${i}Name`].value,
-        yearFinished: form[`sibling${i}Year`].value,
-        school: form[`sibling${i}School`].value,
-      })
+      if (form[`sibling${i}Name`].value !== "") {
+        siblingInfo.push({
+          name: form[`sibling${i}Name`].value,
+          yearFinished: form[`sibling${i}Year`].value,
+          school: form[`sibling${i}School`].value,
+        })
+      }
     }
 
     const newAlumInfo = {
