@@ -254,6 +254,18 @@ function NewAlumniModal(props) {
           >
             Add Sibling
           </Button>
+          {siblingCount.length > 0 ? (
+            <Button
+              type="button"
+              onClick={() =>
+                changeSiblingCount(
+                  siblingCount.slice(0, siblingCount.length - 1)
+                )
+              }
+            >
+              Remove Sibling
+            </Button>
+          ) : null}
           {siblingCount}
           <Header as="h3">Schools and Profession</Header>
           <Form.Group widths="equal">
