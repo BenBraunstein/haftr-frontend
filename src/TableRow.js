@@ -12,8 +12,8 @@ function TableRow(props) {
     return null
   }
 
-  const doubleClickedRow = () => {
-    console.log("Ive been double clicked")
+  const doubleClickedRow = (alum) => {
+    console.log(alum)
   }
 
   const fullName = props.alumInfo.middleName
@@ -21,7 +21,7 @@ function TableRow(props) {
     : `${props.alumInfo.firstName} ${props.alumInfo.lastName}`
 
   return (
-    <Table.Row onDoubleClick={doubleClickedRow}>
+    <Table.Row onDoubleClick={() => doubleClickedRow(props.alumInfo)}>
       <Table.Cell>{fullName}</Table.Cell>
       <Table.Cell>{props.alumInfo.emailAddress}</Table.Cell>
       <Table.Cell>{formatPhoneNumber(props.alumInfo.cellPhone)}</Table.Cell>

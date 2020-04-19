@@ -13,6 +13,7 @@ import "react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css"
 import { useDispatch, useSelector } from "react-redux"
 import { addAlum } from "./actions"
 import NewSibling from "./NewSibling"
+import NewChild from "./NewChild"
 
 function NewAlumniModal(props) {
   let state = useSelector((state) => state)
@@ -30,6 +31,16 @@ function NewAlumniModal(props) {
           name: form[`sibling${i}Name`].value,
           yearFinished: form[`sibling${i}Year`].value,
           school: form[`sibling${i}School`].value,
+        })
+      }
+    }
+
+    for (let i = 1; i <= childCount.length; i++) {
+      if (form[`child${i}Name`].value !== "") {
+        childrenInfo.push({
+          name: form[`child${i}Name`].value,
+          currentGradeOrYearGraduated:
+            form[`child${i}currentGradeOrYearGraduated`].value,
         })
       }
     }
@@ -89,6 +100,7 @@ function NewAlumniModal(props) {
       databaseReasearch: form.databaseReasearch.checked,
       alumniChoir: form.alumniChoir.checked,
       siblings: siblingInfo,
+      children: childrenInfo,
     }
     fetch(`${state.fetchUrl}/alumnis`, {
       method: "POST",
@@ -101,6 +113,8 @@ function NewAlumniModal(props) {
       .then((resp) => resp.json())
       .then((newAlumResponse) => {
         dispatch(addAlum(newAlumResponse))
+        changeChildCount([])
+        changeSiblingCount([])
         changeModalOpen(false)
       })
   }
@@ -112,6 +126,7 @@ function NewAlumniModal(props) {
   }
 
   const [siblingCount, changeSiblingCount] = useState([])
+  const [childCount, changeChildCount] = useState([])
   const [modalOpen, changeModalOpen] = useState(false)
   const [currentDate, setNewDate] = useState(null)
   const onDatePickerChange = (event, data) => setNewDate(data.value)
@@ -425,7 +440,28 @@ function NewAlumniModal(props) {
             />
           </Form.Group>
           <Header as="h3">Children</Header>
-          <Button type="button">Add Child</Button>
+          <Button
+            type="button"
+            onClick={() =>
+              changeChildCount([
+                ...childCount,
+                <NewChild count={childCount.length + 1} />,
+              ])
+            }
+          >
+            Add Child
+          </Button>
+          {childCount.length > 0 ? (
+            <Button
+              type="button"
+              onClick={() =>
+                changeChildCount(childCount.slice(0, childCount.length - 1))
+              }
+            >
+              Remove Child
+            </Button>
+          ) : null}
+          {childCount}
           <Header as="h3">Past or Current?</Header>
           <Form.Group>
             <Checkbox
