@@ -57,6 +57,7 @@ function NewAlumniModal(props) {
       motherName: form.motherName.value,
       fatherName: form.fatherName.value,
       currentAddress: form.currentAddress.value,
+      oldAddresses: form.oldAddresses.value,
       homePhone: form.homePhone.value,
       cellPhone: form.cellPhone.value,
       workPhone: form.workPhone.value,
@@ -241,10 +242,9 @@ function NewAlumniModal(props) {
             type="email"
           />
           <Form.Input
-            label="Old Addresses"
-            placeholder="Old Addresses... COME BACK TO THIS"
+            label="Please list previous addresses, separated by forward slashes (/)"
+            placeholder="Old Addresses"
             name="oldAddresses"
-            style={{ backgroundColor: "red" }}
           />
           <Header as="h3">Clubs</Header>
           <Form.Input
