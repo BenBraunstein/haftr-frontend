@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { addAlum } from "./actions"
 import NewSibling from "./NewSibling"
 import NewChild from "./NewChild"
+import alertify from "alertifyjs"
 
 function NewAlumniModal(props) {
   let state = useSelector((state) => state)
@@ -117,6 +118,10 @@ function NewAlumniModal(props) {
         changeChildCount([])
         changeSiblingCount([])
         changeModalOpen(false)
+        alertify.set("notifier", "position", "bottom-left")
+        alertify.success(
+          `You've added ${newAlumResponse.firstName} ${newAlumResponse.lastName}!`
+        )
       })
   }
 
