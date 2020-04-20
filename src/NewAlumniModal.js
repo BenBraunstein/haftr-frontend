@@ -20,6 +20,10 @@ function NewAlumniModal(props) {
   let state = useSelector((state) => state)
   const dispatch = useDispatch()
 
+  const handleUpload = (e) => {
+    changeProfilePhoto(e.target.files[0])
+  }
+
   const handleNewAlumSubmit = (e) => {
     e.preventDefault()
     const form = e.target
@@ -46,82 +50,130 @@ function NewAlumniModal(props) {
       }
     }
 
-    const newAlumInfo = {
-      hillel: form.hillel.checked,
-      hili: form.hili.checked,
-      haftr: form.haftr.checked,
-      birthday: currentDate,
-      firstName: form.firstName.value,
-      middleName: form.middleName.value,
-      lastName: form.lastName.value,
-      marriedName: form.marriedName.value,
-      motherName: form.motherName.value,
-      fatherName: form.fatherName.value,
-      currentAddress: form.currentAddress.value,
-      oldAddresses: form.oldAddresses.value,
-      homePhone: form.homePhone.value,
-      cellPhone: form.cellPhone.value,
-      workPhone: form.workPhone.value,
-      emailAddress: form.emailAddress.value,
-      clubs: form.clubs.value,
-      awards: form.awards.value,
-      hillelDayAttended: form.hillelDayAttended.checked,
-      hillelSleepAttended: form.hillelSleepAttended.checked,
-      hiliDayAttended: form.hiliDayAttended.checked,
-      hiliWhiteAttended: form.hiliWhiteAttended.checked,
-      hiliInternationalAttended: form.hiliInternationalAttended.checked,
-      hillelDayYears: form.hillelDayYears.value,
-      hillelSleepYears: form.hillelSleepYears.value,
-      hiliDayYears: form.hiliDayYears.value,
-      hiliWhiteYears: form.hiliWhiteYears.value,
-      hiliInternationalYears: form.hiliInternationalYears.value,
-      hillelDayCamper: form.hillelDayCamper.checked,
-      hillelSleepCamper: form.hillelSleepCamper.checked,
-      hiliDayCamper: form.hiliDayCamper.checked,
-      hiliWhiteCamper: form.hiliWhiteCamper.checked,
-      hiliInternationalCamper: form.hiliInternationalCamper.checked,
-      hillelDayCounselor: form.hillelDayCounselor.checked,
-      hillelSleepCounselor: form.hillelSleepCounselor.checked,
-      hiliDayCounselor: form.hiliDayCounselor.checked,
-      hiliWhiteCounselor: form.hiliWhiteCounselor.checked,
-      hiliInternationalCounselor: form.hiliInternationalCounselor.checked,
-      hillelDaySpecialty: form.hillelDaySpecialty.value,
-      hillelSleepSpecialty: form.hillelSleepSpecialty.value,
-      hiliDaySpecialty: form.hiliDaySpecialty.value,
-      hiliWhiteSpecialty: form.hiliWhiteSpecialty.value,
-      hiliInternationalSpecialty: form.hiliInternationalSpecialty.value,
-      classParent: form.classParent.checked,
-      boardTrustee: form.boardTrustee.checked,
-      boardEducation: form.boardEducation.checked,
-      committees: form.committees.value,
-      alumniNewsletters: form.alumniNewsletters.checked,
-      commsOutreach: form.commsOutreach.checked,
-      classReunions: form.classReunions.checked,
-      alumniEvents: form.alumniEvents.checked,
-      fundraisingNetworking: form.fundraisingNetworking.checked,
-      databaseReasearch: form.databaseReasearch.checked,
-      alumniChoir: form.alumniChoir.checked,
+    const siblingsChildren = {
       siblings: siblingInfo,
       children: childrenInfo,
     }
+
+    let formData = new FormData()
+    formData.append("alumni[hillel]", form.hillel.checked)
+    formData.append("alumni[hili]", form.hili.checked)
+    formData.append("alumni[haftr]", form.haftr.checked)
+    formData.append("alumni[birthday]", currentDate)
+    formData.append("alumni[firstName]", form.firstName.value)
+    formData.append("alumni[middleName]", form.middleName.value)
+    formData.append("alumni[lastName]", form.lastName.value)
+    formData.append("alumni[marriedName]", form.marriedName.value)
+    formData.append("alumni[motherName]", form.motherName.value)
+    formData.append("alumni[fatherName]", form.fatherName.value)
+    formData.append("alumni[currentAddress]", form.currentAddress.value)
+    formData.append("alumni[oldAddresses]", form.oldAddresses.value)
+    formData.append("alumni[homePhone]", form.homePhone.value)
+    formData.append("alumni[cellPhone]", form.cellPhone.value)
+    formData.append("alumni[workPhone]", form.workPhone.value)
+    formData.append("alumni[emailAddress]", form.emailAddress.value)
+    formData.append("alumni[clubs]", form.clubs.value)
+    formData.append("alumni[awards]", form.awards.value)
+    formData.append("alumni[hillelDayAttended]", form.hillelDayAttended.checked)
+    formData.append(
+      "alumni[hillelSleepAttended]",
+      form.hillelSleepAttended.checked
+    )
+    formData.append("alumni[hiliDayAttended]", form.hiliDayAttended.checked)
+    formData.append("alumni[hiliWhiteAttended]", form.hiliWhiteAttended.checked)
+    formData.append(
+      "alumni[hiliInternationalAttended]",
+      form.hiliInternationalAttended.checked
+    )
+    formData.append("alumni[hillelDayYears]", form.hillelDayYears.value)
+    formData.append("alumni[hillelSleepYears]", form.hillelSleepYears.value)
+    formData.append("alumni[hiliDayYears]", form.hiliDayYears.value)
+    formData.append("alumni[hiliWhiteYears]", form.hiliWhiteYears.value)
+    formData.append(
+      "alumni[hiliInternationalYears]",
+      form.hiliInternationalYears.value
+    )
+    formData.append("alumni[hillelDayCamper]", form.hillelDayCamper.checked)
+    formData.append("alumni[hillelSleepCamper]", form.hillelSleepCamper.checked)
+    formData.append("alumni[hiliDayCamper]", form.hiliDayCamper.checked)
+    formData.append("alumni[hiliWhiteCamper]", form.hiliWhiteCamper.checked)
+    formData.append(
+      "alumni[hiliInternationalCamper]",
+      form.hiliInternationalCamper.checked
+    )
+    formData.append(
+      "alumni[hillelDayCounselor]",
+      form.hillelDayCounselor.checked
+    )
+    formData.append(
+      "alumni[hillelSleepCounselor]",
+      form.hillelSleepCounselor.checked
+    )
+    formData.append("alumni[hiliDayCounselor]", form.hiliDayCounselor.checked)
+    formData.append(
+      "alumni[hiliWhiteCounselor]",
+      form.hiliWhiteCounselor.checked
+    )
+    formData.append(
+      "alumni[hiliInternationalCounselor]",
+      form.hiliInternationalCounselor.checked
+    )
+    formData.append("alumni[hillelDaySpecialty]", form.hillelDaySpecialty.value)
+    formData.append(
+      "alumni[hillelSleepSpecialty]",
+      form.hillelSleepSpecialty.value
+    )
+    formData.append("alumni[hiliDaySpecialty]", form.hiliDaySpecialty.value)
+    formData.append("alumni[hiliWhiteSpecialty]", form.hiliWhiteSpecialty.value)
+    formData.append(
+      "alumni[hiliInternationalSpecialty]",
+      form.hiliInternationalSpecialty.value
+    )
+    formData.append("alumni[classParent]", form.classParent.checked)
+    formData.append("alumni[boardTrustee]", form.boardTrustee.checked)
+    formData.append("alumni[boardEducation]", form.boardEducation.checked)
+    formData.append("alumni[committees]", form.committees.value)
+    formData.append("alumni[alumniNewsletters]", form.alumniNewsletters.checked)
+    formData.append("alumni[commsOutreach]", form.commsOutreach.checked)
+    formData.append("alumni[classReunions]", form.classReunions.checked)
+    formData.append("alumni[alumniEvents]", form.alumniEvents.checked)
+    formData.append(
+      "alumni[fundraisingNetworking]",
+      form.fundraisingNetworking.checked
+    )
+    formData.append("alumni[databaseResearch]", form.databaseReasearch.checked)
+    formData.append("alumni[alumniChoir]", form.alumniChoir.checked)
+    // formData.append("alumni[siblings]", siblingInfo)
+    // formData.append("alumni[children]", childrenInfo)
+    if (profilePhoto) {
+      formData.append("alumni[photo]", profilePhoto)
+    }
+
     fetch(`${state.fetchUrl}/alumnis`, {
       method: "POST",
-      headers: {
-        accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newAlumInfo),
+      body: formData,
     })
       .then((resp) => resp.json())
       .then((newAlumResponse) => {
-        dispatch(addAlum(newAlumResponse))
-        changeChildCount([])
-        changeSiblingCount([])
-        changeModalOpen(false)
-        alertify.set("notifier", "position", "bottom-left")
-        alertify.success(
-          `You've added ${newAlumResponse.firstName} ${newAlumResponse.lastName}!`
-        )
+        fetch(`${state.fetchUrl}/alumnis/addsibsnkids/${newAlumResponse.id}`, {
+          method: "PATCH",
+          headers: {
+            accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(siblingsChildren),
+        })
+          .then((resp) => resp.json())
+          .then((alumUpdate) => {
+            dispatch(addAlum(alumUpdate))
+            changeChildCount([])
+            changeSiblingCount([])
+            changeModalOpen(false)
+            alertify.set("notifier", "position", "bottom-left")
+            alertify.success(
+              `You've added ${alumUpdate.alum.firstName} ${alumUpdate.alum.lastName}!`
+            )
+          })
       })
   }
 
@@ -131,6 +183,7 @@ function NewAlumniModal(props) {
     }
   }
 
+  const [profilePhoto, changeProfilePhoto] = useState(null)
   const [siblingCount, changeSiblingCount] = useState([])
   const [childCount, changeChildCount] = useState([])
   const [modalOpen, changeModalOpen] = useState(false)
@@ -179,6 +232,17 @@ function NewAlumniModal(props) {
               <label>Birthday</label>
               <SemanticDatepicker onChange={onDatePickerChange} />
             </Form.Field>
+            {/* <Button
+              className="upload-button"
+              floated="left"
+              icon
+              labelPosition="left"
+              primary
+              size="small"
+              onClick={handleUpload}
+            >
+              <Icon name="upload" /> Upload Photo
+            </Button>{" "} */}
             <div className="profile-image-div">Profile Image</div>
           </Form.Group>
           <Form.Group>
@@ -531,6 +595,14 @@ function NewAlumniModal(props) {
               name="alumniChoir"
             />
           </Form.Group>
+          <Header as="h3">Profile Picture:</Header>
+          <Form.Input
+            label="Upload Photo"
+            type="file"
+            name="photo"
+            accept="image/*"
+            onChange={handleUpload}
+          />
           <Button type="submit" positive>
             Save
           </Button>
