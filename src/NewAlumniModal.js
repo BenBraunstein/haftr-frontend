@@ -32,6 +32,15 @@ function NewAlumniModal(props) {
     }
   }
 
+  const modalClose = (e) => {
+    changeModalOpen(false)
+    changePhotoUrl(null)
+    changeProfilePhoto(null)
+    changeSiblingCount([])
+    changeChildCount([])
+    setNewDate(null)
+  }
+
   const handleNewAlumSubmit = (e) => {
     e.preventDefault()
     const form = e.target
@@ -237,7 +246,7 @@ function NewAlumniModal(props) {
               label="HAFTR"
               name="haftr"
             />
-            <Form.Field style={{ paddingLeft: "20px" }}>
+            <Form.Field style={{ paddingLeft: "40px" }}>
               <label>Birthday</label>
               <SemanticDatepicker onChange={onDatePickerChange} />
             </Form.Field>
@@ -608,7 +617,7 @@ function NewAlumniModal(props) {
           <Button type="submit" positive>
             Save
           </Button>
-          <Button negative onClick={() => changeModalOpen(false)}>
+          <Button negative onClick={modalClose}>
             Cancel
           </Button>
         </Form>
