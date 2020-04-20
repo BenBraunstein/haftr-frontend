@@ -20,8 +20,16 @@ function NewAlumniModal(props) {
   let state = useSelector((state) => state)
   const dispatch = useDispatch()
 
-  const handleUpload = (e) => {
-    changeProfilePhoto(e.target.files[0])
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0]
+    const fileReader = new FileReader()
+    fileReader.onloadend = () => {
+      changePhotoUrl(fileReader.result)
+      changeProfilePhoto(file)
+    }
+    if (file) {
+      fileReader.readAsDataURL(file)
+    }
   }
 
   const handleNewAlumSubmit = (e) => {
@@ -183,6 +191,7 @@ function NewAlumniModal(props) {
     }
   }
 
+  const [photoUrl, changePhotoUrl] = useState(null)
   const [profilePhoto, changeProfilePhoto] = useState(null)
   const [siblingCount, changeSiblingCount] = useState([])
   const [childCount, changeChildCount] = useState([])
@@ -232,18 +241,11 @@ function NewAlumniModal(props) {
               <label>Birthday</label>
               <SemanticDatepicker onChange={onDatePickerChange} />
             </Form.Field>
-            {/* <Button
-              className="upload-button"
-              floated="left"
-              icon
-              labelPosition="left"
-              primary
-              size="small"
-              onClick={handleUpload}
-            >
-              <Icon name="upload" /> Upload Photo
-            </Button>{" "} */}
-            <div className="profile-image-div">Profile Image</div>
+            {photoUrl ? (
+              <div className="profile-image-div">
+                <img src={photoUrl} alt="preview" className="profile-image" />
+              </div>
+            ) : null}
           </Form.Group>
           <Form.Group>
             <Form.Input
@@ -601,7 +603,7 @@ function NewAlumniModal(props) {
             type="file"
             name="photo"
             accept="image/*"
-            onChange={handleUpload}
+            onChange={handleFileUpload}
           />
           <Button type="submit" positive>
             Save

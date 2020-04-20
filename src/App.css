@@ -27,9 +27,14 @@
 .profile-image-div {
   position: absolute;
   right: 0;
-  width: 130px;
-  height: 130px;
-  background-color: red;
+  width: 140px;
+  height: 140px;
+}
+
+.profile-image {
+  object-fit: cover;
+  width: 140px;
+  height: 140px;
 }
 
 .upload-button {
