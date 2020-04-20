@@ -1,11 +1,13 @@
-import React from "react"
+import React, { useState } from "react"
 import { Table, Header, Button, Icon } from "semantic-ui-react"
 import TableRow from "./TableRow"
 import { useSelector } from "react-redux"
 import NewAlumniModal from "./NewAlumniModal"
+const sortBy = require("sort-by")
 
 function AlumniTable() {
   let state = useSelector((state) => state)
+  const [nameSort, changeNameDirection] = useState("none")
 
   const downloadCsv = () => {
     let csv = "Name,Email Address,Cell Phone,HILLEL,HILI,HAFTR\n"
@@ -20,13 +22,43 @@ function AlumniTable() {
     hiddenElement.click()
   }
 
+  const sortByName = (e) => {
+    if (Array.from(e.target.classList).includes("dont")) {
+      Array.from(e.target.parentElement.children).forEach((icon) =>
+        icon.classList.remove("active-name-icon")
+      )
+      changeNameDirection("none")
+    } else if (Array.from(e.target.classList).includes("down")) {
+      Array.from(e.target.parentElement.children).forEach((icon) =>
+        icon.classList.remove("active-name-icon")
+      )
+      e.target.classList.add("active-name-icon")
+      changeNameDirection("asc")
+    } else if (Array.from(e.target.classList).includes("up")) {
+      Array.from(e.target.parentElement.children).forEach((icon) =>
+        icon.classList.remove("active-name-icon")
+      )
+      e.target.classList.add("active-name-icon")
+      changeNameDirection("desc")
+    }
+  }
+
   const matchingAlum = state.allAlumni.filter((alum) =>
     `${alum.firstName} ${alum.middleName} ${alum.lastName}`
       .toLowerCase()
       .includes(state.searchBarText.toLowerCase())
   )
 
-  const csvData = matchingAlum.map((alum) => [
+  let sortedAlum
+  if (nameSort === "asc") {
+    sortedAlum = matchingAlum.sort(sortBy("lastName", "firstName"))
+  } else if (nameSort === "desc") {
+    sortedAlum = matchingAlum.sort(sortBy("-lastName", "-firstName"))
+  } else {
+    sortedAlum = matchingAlum
+  }
+
+  const csvData = sortedAlum.map((alum) => [
     `${alum.firstName} ${alum.lastName}`,
     alum.emailAddress,
     alum.cellPhone,
@@ -35,7 +67,7 @@ function AlumniTable() {
     alum.haftr,
   ])
 
-  const matchingAlumniRows = matchingAlum.map((alum) => (
+  const matchingAlumniRows = sortedAlum.map((alum) => (
     <TableRow key={`alum${alum.id}`} alumInfo={alum} />
   ))
 
@@ -45,7 +77,14 @@ function AlumniTable() {
       <Table id="alumni-table" celled>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell>Name</Table.HeaderCell>
+            <Table.HeaderCell>
+              Name
+              <span class="name-sort-icons" onClick={sortByName}>
+                <Icon name="sort alphabet down" />
+                <Icon name="sort alphabet up" />
+                <Icon name="dont" />
+              </span>
+            </Table.HeaderCell>
             <Table.HeaderCell>Email Address</Table.HeaderCell>
             <Table.HeaderCell>Cell Phone Number</Table.HeaderCell>
             <Table.HeaderCell>HILLEL</Table.HeaderCell>
