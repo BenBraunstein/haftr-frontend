@@ -44,34 +44,36 @@ function AlumniTable() {
   }
 
   const matchingAlum = state.allAlumni.filter((alum) =>
-    `${alum.firstName} ${alum.middleName} ${alum.lastName}`
+    `${alum.alum.firstName} ${alum.alum.middleName} ${alum.alum.lastName}`
       .toLowerCase()
       .includes(state.searchBarText.toLowerCase())
   )
 
   let sortedAlum
   if (nameSort === "asc") {
-    sortedAlum = matchingAlum.sort(sortBy("lastName", "firstName"))
+    sortedAlum = matchingAlum.sort(sortBy("alum.lastName", "alum.firstName"))
   } else if (nameSort === "desc") {
-    sortedAlum = matchingAlum.sort(sortBy("-lastName", "-firstName"))
+    sortedAlum = matchingAlum.sort(sortBy("-alum.lastName", "-alum.firstName"))
   } else {
     sortedAlum = matchingAlum
   }
 
   const csvData = sortedAlum.map((alum) => [
-    `${alum.firstName} ${alum.lastName}`,
-    alum.emailAddress,
-    alum.cellPhone,
-    alum.hillel,
-    alum.hili,
-    alum.haftr,
-    alum.birthday
-      ? `${(new Date() - new Date(alum.birthday)) / 31554600000}`.split(".")[0]
+    `${alum.alum.firstName} ${alum.alum.lastName}`,
+    alum.alum.emailAddress,
+    alum.alum.cellPhone,
+    alum.alum.hillel,
+    alum.alum.hili,
+    alum.alum.haftr,
+    alum.alum.birthday
+      ? `${(new Date() - new Date(alum.alum.birthday)) / 31554600000}`.split(
+          "."
+        )[0]
       : "No Birthday",
   ])
 
   const matchingAlumniRows = sortedAlum.map((alum) => (
-    <TableRow key={`alum${alum.id}`} alumInfo={alum} />
+    <TableRow key={`alum${alum.alum.id}`} alumInfo={alum.alum} />
   ))
 
   return (
