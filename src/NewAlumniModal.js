@@ -175,10 +175,11 @@ function NewAlumniModal(props) {
               label="HAFTR"
               name="haftr"
             />
-            <Form.Field style={{ paddingLeft: "150px" }}>
+            <Form.Field style={{ paddingLeft: "20px" }}>
               <label>Birthday</label>
               <SemanticDatepicker onChange={onDatePickerChange} />
             </Form.Field>
+            <div className="profile-image-div">Profile Image</div>
           </Form.Group>
           <Form.Group>
             <Form.Input
