@@ -10,7 +10,7 @@ function AlumniTable() {
   const [nameSort, changeNameDirection] = useState("none")
 
   const downloadCsv = () => {
-    let csv = "Name,Email Address,Cell Phone,HILLEL,HILI,HAFTR\n"
+    let csv = "Name,Email Address,Cell Phone,HILLEL,HILI,HAFTR,Age\n"
     csvData.forEach(function (row) {
       csv += row.join(",")
       csv += "\n"
@@ -65,6 +65,9 @@ function AlumniTable() {
     alum.hillel,
     alum.hili,
     alum.haftr,
+    alum.birthday
+      ? `${(new Date() - new Date(alum.birthday)) / 31554600000}`.split(".")[0]
+      : "No Birthday",
   ])
 
   const matchingAlumniRows = sortedAlum.map((alum) => (
