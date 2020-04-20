@@ -73,7 +73,7 @@ function AlumniTable() {
   ])
 
   const matchingAlumniRows = sortedAlum.map((alum) => (
-    <TableRow key={`alum${alum.alum.id}`} alumInfo={alum.alum} />
+    <TableRow key={`alum${alum.alum.id}`} alumInfo={alum} />
   ))
 
   return (

@@ -11,14 +11,15 @@ import {
 import SemanticDatepicker from "react-semantic-ui-datepickers"
 import "react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css"
 import { useDispatch, useSelector } from "react-redux"
-import { addAlum } from "./actions"
+import { addAlum, stopEditAlum } from "./actions"
 import NewSibling from "./NewSibling"
 import NewChild from "./NewChild"
 import alertify from "alertifyjs"
 
-function NewAlumniModal(props) {
+function EditAlumniModal() {
   let state = useSelector((state) => state)
   const dispatch = useDispatch()
+  const alum = state.alumEditing
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0]
@@ -33,15 +34,10 @@ function NewAlumniModal(props) {
   }
 
   const modalClose = (e) => {
-    changeModalOpen(false)
-    changePhotoUrl(null)
-    changeProfilePhoto(null)
-    changeSiblingCount([])
-    changeChildCount([])
-    setNewDate(null)
+    dispatch(stopEditAlum())
   }
 
-  const handleNewAlumSubmit = (e) => {
+  const handleEditAlumSubmit = (e) => {
     e.preventDefault()
     const form = e.target
     // Grab all siblings and their info
@@ -196,55 +192,59 @@ function NewAlumniModal(props) {
     }
   }
 
-  const [photoUrl, changePhotoUrl] = useState(null)
+  const handleAlumChange = (e) => {
+    if (e.target.type === "text") {
+      changeAlumInfo({ ...alumInfo, [e.target.name]: e.target.value })
+    } else if (e.target.previousSibling.type === "checkbox") {
+      changeAlumInfo({ ...alumInfo, [e.target.name]: !e.target.checked })
+    }
+  }
+  const [alumInfo, changeAlumInfo] = useState(alum.alum)
+  const date = new Date(alumInfo.birthday)
+  date.setDate(date.getDate() + 1)
+  const [photoUrl, changePhotoUrl] = useState(alum.photo)
   const [profilePhoto, changeProfilePhoto] = useState(null)
   const [siblingCount, changeSiblingCount] = useState([])
   const [childCount, changeChildCount] = useState([])
-  const [modalOpen, changeModalOpen] = useState(false)
-  const [currentDate, setNewDate] = useState(null)
+  const [currentDate, setNewDate] = useState(date)
   const onDatePickerChange = (event, data) => setNewDate(data.value)
 
   return (
-    <Modal
-      open={modalOpen}
-      trigger={
-        props.fromNav ? (
-          <Menu.Item name="new_alum" onClick={() => changeModalOpen(true)}>
-            New Alumni
-          </Menu.Item>
-        ) : (
-          <Button
-            floated="right"
-            icon
-            labelPosition="left"
-            primary
-            size="small"
-            onClick={() => changeModalOpen(true)}
-          >
-            <Icon name="user" /> Add Alumni
-          </Button>
-        )
-      }
-    >
-      <Modal.Header>Add a New Alum</Modal.Header>
+    <Modal open={state.editModalOpen}>
+      <Modal.Header>
+        Edit{" "}
+        {alum.alum.middleName
+          ? `${alum.alum.firstName} ${alum.alum.middleName} ${alum.alum.lastName}`
+          : `${alum.alum.firstName} ${alum.alum.lastName}`}
+      </Modal.Header>
       <Modal.Content>
-        <Form onSubmit={handleNewAlumSubmit} onKeyDown={handleEnterClick}>
+        <Form onSubmit={handleEditAlumSubmit} onKeyDown={handleEnterClick}>
           <Form.Group className="school-attended-checkbox" widths="equal">
             <label>Schools Attended</label>
             <Checkbox
               className="semantic-checkbox"
               label="HILLEL"
               name="hillel"
+              onChange={handleAlumChange}
             />
-            <Checkbox className="semantic-checkbox" label="HILI" name="hili" />
+            <Checkbox
+              className="semantic-checkbox"
+              label="HILI"
+              name="hili"
+              onChange={handleAlumChange}
+            />
             <Checkbox
               className="semantic-checkbox"
               label="HAFTR"
               name="haftr"
+              onChange={handleAlumChange}
             />
             <Form.Field style={{ paddingLeft: "40px" }}>
               <label>Birthday</label>
-              <SemanticDatepicker onChange={onDatePickerChange} />
+              <SemanticDatepicker
+                onChange={onDatePickerChange}
+                value={currentDate}
+              />
             </Form.Field>
             {photoUrl ? (
               <div className="profile-image-div">
@@ -257,16 +257,22 @@ function NewAlumniModal(props) {
               label="First Name"
               placeholder="First Name"
               name="firstName"
+              value={alumInfo.firstName}
+              onChange={handleAlumChange}
             />
             <Form.Input
               label="Middle Name"
               placeholder="Middle Name"
               name="middleName"
+              value={alumInfo.middleName}
+              onChange={handleAlumChange}
             />
             <Form.Input
               label="Last Name"
               placeholder="Last Name"
               name="lastName"
+              value={alumInfo.lastName}
+              onChange={handleAlumChange}
             />
           </Form.Group>
           <Form.Group widths="equal">
@@ -274,16 +280,22 @@ function NewAlumniModal(props) {
               label="Married Name"
               placeholder="Married Name"
               name="marriedName"
+              value={alumInfo.marriedName}
+              onChange={handleAlumChange}
             />
             <Form.Input
               label="Mother's Name"
               placeholder="Mother's Name"
               name="motherName"
+              value={alumInfo.motherName}
+              onChange={handleAlumChange}
             />
             <Form.Input
               label="Father's Name"
               placeholder="Father's Name"
               name="fatherName"
+              value={alumInfo.fatherName}
+              onChange={handleAlumChange}
             />
           </Form.Group>
           <Header as="h3">Contact Info</Header>
@@ -291,24 +303,32 @@ function NewAlumniModal(props) {
             label="Current Address"
             placeholder="Current Address"
             name="currentAddress"
+            value={alumInfo.currentAddress}
+            onChange={handleAlumChange}
           />
           <Form.Group widths="equal">
             <Form.Input
               label="Home Phone"
               placeholder="Home Phone"
               name="homePhone"
+              value={alumInfo.homePhone}
+              onChange={handleAlumChange}
               type="tel"
             />
             <Form.Input
               label="Cell Phone"
               placeholder="Cell Phone"
               name="cellPhone"
+              value={alumInfo.cellPhone}
+              onChange={handleAlumChange}
               type="tel"
             />
             <Form.Input
               label="Work Phone"
               placeholder="Work Phone"
               name="workPhone"
+              value={alumInfo.workPhone}
+              onChange={handleAlumChange}
               type="tel"
             />
           </Form.Group>
@@ -317,22 +337,30 @@ function NewAlumniModal(props) {
             placeholder="Email Address"
             name="emailAddress"
             type="email"
+            value={alumInfo.emailAddress}
+            onChange={handleAlumChange}
           />
           <Form.Input
             label="Please list previous addresses, separated by forward slashes (/)"
             placeholder="Old Addresses"
             name="oldAddresses"
+            value={alumInfo.oldAddresses}
+            onChange={handleAlumChange}
           />
           <Header as="h3">Clubs</Header>
           <Form.Input
             label="Please list all clubs you were in, separated by commas"
             placeholder="Clubs"
             name="clubs"
+            value={alumInfo.clubs}
+            onChange={handleAlumChange}
           />
           <Form.Input
             label="Please list all awards you (or your team) received, separated by commas"
             placeholder="Awards"
             name="awards"
+            value={alumInfo.awards}
+            onChange={handleAlumChange}
           />
           <Header as="h3">Siblings</Header>
           <Button
@@ -365,11 +393,15 @@ function NewAlumniModal(props) {
               label="School in Israel Attended"
               placeholder="Israel School"
               name="israelSchool"
+              value={alumInfo.israelSchool}
+              onChange={handleAlumChange}
             />
             <Form.Input
               label="College/University Attended"
               placeholder="College"
               name="collegeAttended"
+              value={alumInfo.collegeAttended}
+              onChange={handleAlumChange}
             />
           </Form.Group>
           <Form.Group widths="equal">
@@ -377,11 +409,15 @@ function NewAlumniModal(props) {
               label="Graduate School Attended"
               placeholder="Graduate School"
               name="gradSchool"
+              value={alumInfo.gradSchool}
+              onChange={handleAlumChange}
             />
             <Form.Input
               label="Profession"
               placeholder="Profession"
               name="profession"
+              value={alumInfo.profession}
+              onChange={handleAlumChange}
             />
           </Form.Group>
           <Header as="h3">Did you ever attend</Header>
@@ -390,26 +426,33 @@ function NewAlumniModal(props) {
               className="semantic-checkbox"
               label="Hillel Day Camp"
               name="hillelDayAttended"
+              onChange={handleAlumChange}
             />
             <Form.Input
               label="Years"
               placeholder="Years"
               name="hillelDayYears"
+              value={alumInfo.hillelDayYears}
+              onChange={handleAlumChange}
             />
             <Checkbox
               className="semantic-checkbox"
               label="Camper"
               name="hillelDayCamper"
+              onChange={handleAlumChange}
             />
             <Checkbox
               className="semantic-checkbox"
               label="Counselor"
               name="hillelDayCounselor"
+              onChange={handleAlumChange}
             />
             <Form.Input
               label="Specialty"
               placeholder="Specialty"
               name="hillelDaySpecialty"
+              value={alumInfo.hillelDaySpecialty}
+              onChange={handleAlumChange}
             />
           </Form.Group>
           <Form.Group>
@@ -417,26 +460,33 @@ function NewAlumniModal(props) {
               className="semantic-checkbox"
               label="Hillel Sleep Away"
               name="hillelSleepAttended"
+              onChange={handleAlumChange}
             />
             <Form.Input
               label="Years"
               placeholder="Years"
               name="hillelSleepYears"
+              value={alumInfo.hillelSleepYears}
+              onChange={handleAlumChange}
             />
             <Checkbox
               className="semantic-checkbox"
               label="Camper"
               name="hillelSleepCamper"
+              onChange={handleAlumChange}
             />
             <Checkbox
               className="semantic-checkbox"
               label="Counselor"
               name="hillelSleepCounselor"
+              onChange={handleAlumChange}
             />
             <Form.Input
               label="Specialty"
               placeholder="Specialty"
               name="hillelSleepSpecialty"
+              value={alumInfo.hillelSleepSpecialty}
+              onChange={handleAlumChange}
             />
           </Form.Group>
           <Form.Group>
@@ -444,22 +494,27 @@ function NewAlumniModal(props) {
               className="semantic-checkbox"
               label="HILI Day Camp"
               name="hiliDayAttended"
+              onChange={handleAlumChange}
             />
             <Form.Input label="Years" placeholder="Years" name="hiliDayYears" />
             <Checkbox
               className="semantic-checkbox"
               label="Camper"
               name="hiliDayCamper"
+              onChange={handleAlumChange}
             />
             <Checkbox
               className="semantic-checkbox"
               label="Counselor"
               name="hiliDayCounselor"
+              onChange={handleAlumChange}
             />
             <Form.Input
               label="Specialty"
               placeholder="Specialty"
               name="hiliDaySpecialty"
+              value={alumInfo.hiliDaySpecialty}
+              onChange={handleAlumChange}
             />
           </Form.Group>
           <Form.Group>
@@ -467,26 +522,33 @@ function NewAlumniModal(props) {
               className="semantic-checkbox"
               label="HILI White Lake"
               name="hiliWhiteAttended"
+              onChange={handleAlumChange}
             />
             <Form.Input
               label="Years"
               placeholder="Years"
               name="hiliWhiteYears"
+              value={alumInfo.hiliWhiteYears}
+              onChange={handleAlumChange}
             />
             <Checkbox
               className="semantic-checkbox"
               label="Camper"
               name="hiliWhiteCamper"
+              onChange={handleAlumChange}
             />
             <Checkbox
               className="semantic-checkbox"
               label="Counselor"
               name="hiliWhiteCounselor"
+              onChange={handleAlumChange}
             />
             <Form.Input
               label="Specialty"
               placeholder="Specialty"
               name="hiliWhiteSpecialty"
+              value={alumInfo.hiliWhiteSpecialty}
+              onChange={handleAlumChange}
             />
           </Form.Group>
           <Form.Group>
@@ -494,26 +556,33 @@ function NewAlumniModal(props) {
               className="semantic-checkbox"
               label="HILI International"
               name="hiliInternationalAttended"
+              onChange={handleAlumChange}
             />
             <Form.Input
               label="Years"
               placeholder="Years"
               name="hiliInternationalYears"
+              value={alumInfo.hiliInternationalYears}
+              onChange={handleAlumChange}
             />
             <Checkbox
               className="semantic-checkbox"
               label="Camper"
               name="hiliInternationalCamper"
+              onChange={handleAlumChange}
             />
             <Checkbox
               className="semantic-checkbox"
               label="Counselor"
               name="hiliInternationalCounselor"
+              onChange={handleAlumChange}
             />
             <Form.Input
               label="Specialty"
               placeholder="Specialty"
               name="hiliInternationalSpecialty"
+              value={alumInfo.hiliInternationalSpecialty}
+              onChange={handleAlumChange}
             />
           </Form.Group>
           <Header as="h3">Children</Header>
@@ -545,21 +614,26 @@ function NewAlumniModal(props) {
               className="semantic-checkbox"
               label="Class Parent"
               name="classParent"
+              onChange={handleAlumChange}
             />
             <Checkbox
               className="semantic-checkbox"
               label="Board of Trustees"
               name="boardTrustee"
+              onChange={handleAlumChange}
             />
             <Checkbox
               className="semantic-checkbox"
               label="Board of Education"
               name="boardEducation"
+              onChange={handleAlumChange}
             />
             <Form.Input
               label="Enter any committees, separated by commas"
               placeholder="Committees"
               name="committees"
+              value={alumInfo.committees}
+              onChange={handleAlumChange}
             />
           </Form.Group>
           <Header as="h3">Willing to work on:</Header>
@@ -568,21 +642,25 @@ function NewAlumniModal(props) {
               className="semantic-checkbox"
               label="Alumni Newsletters"
               name="alumniNewsletters"
+              onChange={handleAlumChange}
             />
             <Checkbox
               className="semantic-checkbox"
               label="Communications and Outreach"
               name="commsOutreach"
+              onChange={handleAlumChange}
             />
             <Checkbox
               className="semantic-checkbox"
               label="Class Reunions"
               name="classReunions"
+              onChange={handleAlumChange}
             />
             <Checkbox
               className="semantic-checkbox"
               label="Coordinating and or Hosting Alumni Events"
               name="alumniEvents"
+              onChange={handleAlumChange}
             />
           </Form.Group>
           <Form.Group widths="equal">
@@ -590,16 +668,19 @@ function NewAlumniModal(props) {
               className="semantic-checkbox"
               label="Fundraising and Networking Initiatives"
               name="fundraisingNetworking"
+              onChange={handleAlumChange}
             />
             <Checkbox
               className="semantic-checkbox"
               label="Database Research"
               name="databaseReasearch"
+              onChange={handleAlumChange}
             />
             <Checkbox
               className="semantic-checkbox"
               label="Alumni Choir"
               name="alumniChoir"
+              onChange={handleAlumChange}
             />
           </Form.Group>
           <Header as="h3">Profile Picture:</Header>
@@ -622,4 +703,4 @@ function NewAlumniModal(props) {
   )
 }
 
-export default NewAlumniModal
+export default EditAlumniModal

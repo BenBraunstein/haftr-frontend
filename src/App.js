@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { fetchAlumni } from "./actions"
 import AlumniTable from "./AlumniTable"
 import NavBar from "./NavBar"
+import EditAlumniModal from "./EditAlumniModal"
 
 function App() {
   let state = useSelector((state) => state)
@@ -14,13 +15,14 @@ function App() {
       .then((resp) => resp.json())
       .then((data) => {
         dispatch(fetchAlumni(data))
-        console.log(data)
       })
   }, [state.fetchUrl, dispatch])
 
   return (
     <div className="App">
       <NavBar />
+      {state.editModalOpen ? <EditAlumniModal /> : null}
+
       <br />
       <br />
       <AlumniTable />

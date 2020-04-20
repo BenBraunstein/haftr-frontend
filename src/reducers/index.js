@@ -8,6 +8,10 @@ const rootReducer = (state = defaultState, action) => {
       return { ...state, searchBarText: action.payload }
     case "ADD_NEW_ALUM":
       return { ...state, allAlumni: [...state.allAlumni, action.payload] }
+    case "EDIT_ALUM":
+      return { ...state, alumEditing: action.payload, editModalOpen: true }
+    case "STOP_EDIT_ALUM":
+      return { ...state, alumEditing: {}, editModalOpen: false }
     default:
       return state
   }

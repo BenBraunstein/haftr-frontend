@@ -16,7 +16,7 @@ export default function NewSibling(props) {
       />
       <Form.Input
         label="School"
-        placeholder="Year Finished"
+        placeholder="School"
         name={`sibling${props.count}School`}
       />
     </Form.Group>

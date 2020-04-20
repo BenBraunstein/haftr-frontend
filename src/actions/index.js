@@ -19,4 +19,17 @@ const addAlum = (newAlum) => {
   }
 }
 
-export { fetchAlumni, updateSearchText, addAlum }
+const editAlum = (alum) => {
+  return {
+    type: "EDIT_ALUM",
+    payload: alum,
+  }
+}
+
+const stopEditAlum = () => {
+  return {
+    type: "STOP_EDIT_ALUM",
+  }
+}
+
+export { fetchAlumni, updateSearchText, addAlum, editAlum, stopEditAlum }
