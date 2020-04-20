@@ -16,6 +16,15 @@ function TableRow(props) {
     console.log(alum)
   }
 
+  const calculateAge = (birthday) => {
+    if (!birthday) {
+      return "No Birthday"
+    }
+    const today = new Date()
+    const birthdate = new Date(birthday)
+    return `${(today - birthdate) / 31554600000}`.split(".")[0]
+  }
+
   const fullName = props.alumInfo.middleName
     ? `${props.alumInfo.firstName} ${props.alumInfo.middleName} ${props.alumInfo.lastName}`
     : `${props.alumInfo.firstName} ${props.alumInfo.lastName}`
@@ -46,6 +55,7 @@ function TableRow(props) {
           <Icon name="close" />
         )}
       </Table.Cell>
+      <Table.Cell>{calculateAge(props.alumInfo.birthday)} </Table.Cell>
     </Table.Row>
   )
 }

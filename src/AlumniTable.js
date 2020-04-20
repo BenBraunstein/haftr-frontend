@@ -90,12 +90,13 @@ function AlumniTable() {
             <Table.HeaderCell>HILLEL</Table.HeaderCell>
             <Table.HeaderCell>HILI</Table.HeaderCell>
             <Table.HeaderCell>HAFTR</Table.HeaderCell>
+            <Table.HeaderCell>Age</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>{matchingAlumniRows}</Table.Body>
         <Table.Footer fullWidth>
           <Table.Row>
-            <Table.HeaderCell colSpan="6">
+            <Table.HeaderCell colSpan="7">
               <Button
                 floated="left"
                 icon
