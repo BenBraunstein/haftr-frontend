@@ -46,3 +46,7 @@
   padding-bottom: 1%;
   height: 100px;
 }
+
+#delete-alum-button {
+  float: right;
+}

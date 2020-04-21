@@ -32,4 +32,18 @@ const stopEditAlum = () => {
   }
 }
 
-export { fetchAlumni, updateSearchText, addAlum, editAlum, stopEditAlum }
+const deleteAlum = (alum) => {
+  return {
+    type: "DELETE_ALUM",
+    payload: alum,
+  }
+}
+
+export {
+  fetchAlumni,
+  updateSearchText,
+  addAlum,
+  editAlum,
+  stopEditAlum,
+  deleteAlum,
+}

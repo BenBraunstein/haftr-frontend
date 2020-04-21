@@ -3,7 +3,7 @@ import { Modal, Button, Form, Checkbox, Header } from "semantic-ui-react"
 import SemanticDatepicker from "react-semantic-ui-datepickers"
 import "react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css"
 import { useDispatch, useSelector } from "react-redux"
-import { addAlum, stopEditAlum } from "./actions"
+import { addAlum, stopEditAlum, deleteAlum } from "./actions"
 import NewSibling from "./NewSibling"
 import NewChild from "./NewChild"
 import alertify from "alertifyjs"
@@ -178,6 +178,20 @@ function EditAlumniModal() {
               `You've added ${alumUpdate.alum.firstName} ${alumUpdate.alum.lastName}!`
             )
           })
+      })
+  }
+
+  const confirmDeleteAlum = () => {
+    fetch(`${state.fetchUrl}/alumnis/${alumInfo.id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((resp) => resp.json())
+      .then((deletedAlum) => {
+        dispatch(stopEditAlum())
+        dispatch(deleteAlum(deletedAlum))
       })
   }
 
@@ -693,10 +707,25 @@ function EditAlumniModal() {
             onChange={handleFileUpload}
           />
           <Button type="submit" positive>
-            Save
+            Save Changes
           </Button>
           <Button negative onClick={modalClose}>
             Cancel
+          </Button>
+          <Button
+            id="delete-alum-button"
+            negative
+            type="button"
+            onClick={() =>
+              alertify.confirm(
+                `Are you sure you want to delete ${alumInfo.firstName}?`,
+                "This action cannot be undone",
+                confirmDeleteAlum,
+                function () {}
+              )
+            }
+          >
+            Delete {alumInfo.firstName}
           </Button>
         </Form>
       </Modal.Content>
