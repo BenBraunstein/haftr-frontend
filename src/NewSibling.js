@@ -15,7 +15,6 @@ export default function NewSibling(props) {
           [`sibling${props.count}School`]: "",
         }
   )
-  debugger
 
   const handleChange = (e) => {
     changeFormInfo({

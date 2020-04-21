@@ -224,13 +224,12 @@ function EditAlumniModal() {
       />
     )
   }
-  // if (alum.siblings.length > 0) {
-  //   siblingRows = alum.siblings.map((sibling) => {
-  //     let i = 0
-  //     i++
-  //     return <NewSibling key={`sibling${i}`} siblingInfo={sibling} count={i} />
-  //   })
-  // }
+  let childRows = []
+  for (let i = 1; i <= alum.children.length; i++) {
+    childRows.push(
+      <NewChild key={`child${i}`} childInfo={alum.children[i - 1]} count={i} />
+    )
+  }
 
   const [alumInfo, changeAlumInfo] = useState(alum.alum)
   const date = new Date(alumInfo.birthday)
@@ -240,7 +239,9 @@ function EditAlumniModal() {
   const [siblingCount, changeSiblingCount] = useState(
     alum.siblings.length > 0 ? siblingRows : []
   )
-  const [childCount, changeChildCount] = useState([])
+  const [childCount, changeChildCount] = useState(
+    alum.children.length > 0 ? childRows : []
+  )
   const [currentDate, setNewDate] = useState(date)
   const onDatePickerChange = (event, data) => setNewDate(data.value)
 
@@ -846,7 +847,8 @@ function EditAlumniModal() {
               Remove Child
             </Button>
           ) : null}
-          {childCount}
+          {childCount.length > 0 ? childCount : null}
+
           <Header as="h3">Past or Current?</Header>
           <Form.Group>
             {alumInfo.classParent ? (
