@@ -214,6 +214,11 @@ function EditAlumniModal() {
   const [photoUrl, changePhotoUrl] = useState(alum.photo)
   const [profilePhoto, changeProfilePhoto] = useState(null)
   const [siblingCount, changeSiblingCount] = useState([])
+  changeSiblingCount(
+    alum.siblings.map((sibling) => (
+      <NewSibling siblingInfo={sibling} count={siblingCount.length + 1} />
+    ))
+  )
   const [childCount, changeChildCount] = useState([])
   const [currentDate, setNewDate] = useState(date)
   const onDatePickerChange = (event, data) => setNewDate(data.value)

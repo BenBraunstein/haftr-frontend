@@ -4,7 +4,11 @@ import { Form } from "semantic-ui-react"
 export default function NewSibling(props) {
   const [formInfo, changeFormInfo] = useState(
     props.siblingInfo
-      ? props.siblingInfo
+      ? {
+          [`sibling${props.count}Name`]: props.siblingInfo.name,
+          [`sibling${props.count}Year`]: props.siblingInfo.yearFinished,
+          [`sibling${props.count}School`]: props.siblingInfo.school,
+        }
       : {
           [`sibling${props.count}Name`]: "",
           [`sibling${props.count}Year`]: "",
