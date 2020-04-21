@@ -242,7 +242,7 @@ function EditAlumniModal() {
   const [childCount, changeChildCount] = useState(
     alum.children.length > 0 ? childRows : []
   )
-  const [currentDate, setNewDate] = useState(date)
+  const [currentDate, setNewDate] = useState(alumInfo.birthday ? date : "")
   const onDatePickerChange = (event, data) => setNewDate(data.value)
 
   return (
@@ -460,7 +460,7 @@ function EditAlumniModal() {
               Remove Sibling
             </Button>
           ) : null}
-          {siblingCount.length > 0 ? siblingCount : null}
+          {siblingCount}
           <Header as="h3">Schools and Profession</Header>
           <Form.Group widths="equal">
             <Form.Input
@@ -847,8 +847,7 @@ function EditAlumniModal() {
               Remove Child
             </Button>
           ) : null}
-          {childCount.length > 0 ? childCount : null}
-
+          {childCount}
           <Header as="h3">Past or Current?</Header>
           <Form.Group>
             {alumInfo.classParent ? (
