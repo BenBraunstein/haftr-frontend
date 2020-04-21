@@ -1,9 +1,11 @@
 import React from "react"
 import { Menu, Input } from "semantic-ui-react"
-import haftrLogo from "./school-logo-dark.png"
 import { useDispatch } from "react-redux"
 import { updateSearchText } from "./actions"
 import NewAlumniModal from "./NewAlumniModal"
+import haftrLogo from "./haftr-logo.jpg"
+import hiliLogo from "./hili-logo.jpg"
+import hillelLogo from "./hillel-logo.jpg"
 
 function NavBar() {
   const dispatch = useDispatch()
@@ -12,7 +14,13 @@ function NavBar() {
     <div>
       <Menu fixed="top">
         <Menu.Item name="home">
-          <img src={haftrLogo} alt="haftr-logo" style={{ width: "10vmin" }} />
+          <img src={hiliLogo} alt="haftr-logo" style={{ height: "30px" }} />
+        </Menu.Item>
+        <Menu.Item name="home">
+          <img src={haftrLogo} alt="haftr-logo" style={{ width: "80px" }} />
+        </Menu.Item>
+        <Menu.Item name="home">
+          <img src={hillelLogo} alt="haftr-logo" style={{ height: "30px" }} />
         </Menu.Item>
         {/* Will appear as Nav Button */}
         {<NewAlumniModal fromNav />}
