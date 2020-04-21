@@ -15,6 +15,9 @@ import { addAlum } from "./actions"
 import NewSibling from "./NewSibling"
 import NewChild from "./NewChild"
 import alertify from "alertifyjs"
+import haftrLogo from "./haftr-logo.jpg"
+import hiliLogo from "./hili-logo.jpg"
+import hillelLogo from "./hillel-logo.jpg"
 
 function NewAlumniModal(props) {
   let state = useSelector((state) => state)
@@ -229,6 +232,11 @@ function NewAlumniModal(props) {
       <Modal.Header>Add a New Alum</Modal.Header>
       <Modal.Content>
         <Form onSubmit={handleNewAlumSubmit} onKeyDown={handleEnterClick}>
+          <Form.Group className="all-logos-group" widths="equal">
+            <img className="all-logos" src={hiliLogo} alt="hili-logo" />
+            <img className="all-logos" src={haftrLogo} alt="haftr-logo" />
+            <img className="all-logos" src={hillelLogo} alt="hillel-logo" />
+          </Form.Group>
           <Form.Group className="school-attended-checkbox" widths="equal">
             <label>Schools Attended</label>
             <Checkbox

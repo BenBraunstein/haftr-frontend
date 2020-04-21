@@ -1,13 +1,5 @@
 import React, { useState } from "react"
-import {
-  Modal,
-  Menu,
-  Button,
-  Form,
-  Checkbox,
-  Header,
-  Icon,
-} from "semantic-ui-react"
+import { Modal, Button, Form, Checkbox, Header } from "semantic-ui-react"
 import SemanticDatepicker from "react-semantic-ui-datepickers"
 import "react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css"
 import { useDispatch, useSelector } from "react-redux"
@@ -15,6 +7,9 @@ import { addAlum, stopEditAlum } from "./actions"
 import NewSibling from "./NewSibling"
 import NewChild from "./NewChild"
 import alertify from "alertifyjs"
+import haftrLogo from "./haftr-logo.jpg"
+import hiliLogo from "./hili-logo.jpg"
+import hillelLogo from "./hillel-logo.jpg"
 
 function EditAlumniModal() {
   let state = useSelector((state) => state)
@@ -219,6 +214,12 @@ function EditAlumniModal() {
       </Modal.Header>
       <Modal.Content>
         <Form onSubmit={handleEditAlumSubmit} onKeyDown={handleEnterClick}>
+          <Form.Group className="all-logos-group" widths="equal">
+            <img className="all-logos" src={hiliLogo} alt="hili-logo" />
+            <img className="all-logos" src={haftrLogo} alt="haftr-logo" />
+            <img className="all-logos" src={hillelLogo} alt="hillel-logo" />
+          </Form.Group>
+
           <Form.Group className="school-attended-checkbox" widths="equal">
             <label>Schools Attended</label>
             <Checkbox
