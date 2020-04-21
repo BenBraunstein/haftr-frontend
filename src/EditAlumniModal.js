@@ -82,6 +82,11 @@ function EditAlumniModal() {
     formData.append("alumni[emailAddress]", form.emailAddress.value)
     formData.append("alumni[clubs]", form.clubs.value)
     formData.append("alumni[awards]", form.awards.value)
+    formData.append("alumni[israelSchool]", form.israelSchool.value)
+    formData.append("alumni[collegeAttended]", form.collegeAttended.value)
+    formData.append("alumni[gradSchool]", form.gradSchool.value)
+    formData.append("alumni[profession]", form.profession.value)
+
     formData.append("alumni[hillelDayAttended]", form.hillelDayAttended.checked)
     formData.append(
       "alumni[hillelSleepAttended]",
@@ -149,7 +154,7 @@ function EditAlumniModal() {
       "alumni[fundraisingNetworking]",
       form.fundraisingNetworking.checked
     )
-    formData.append("alumni[databaseResearch]", form.databaseReasearch.checked)
+    formData.append("alumni[databaseResearch]", form.databaseResearch.checked)
     formData.append("alumni[alumniChoir]", form.alumniChoir.checked)
     if (profilePhoto) {
       formData.append("alumni[photo]", profilePhoto)
@@ -208,16 +213,32 @@ function EditAlumniModal() {
       changeAlumInfo({ ...alumInfo, [e.target.name]: !e.target.checked })
     }
   }
+
+  let siblingRows = []
+  for (let i = 1; i <= alum.siblings.length; i++) {
+    siblingRows.push(
+      <NewSibling
+        key={`sibling${i}`}
+        siblingInfo={alum.siblings[i - 1]}
+        count={i}
+      />
+    )
+  }
+  // if (alum.siblings.length > 0) {
+  //   siblingRows = alum.siblings.map((sibling) => {
+  //     let i = 0
+  //     i++
+  //     return <NewSibling key={`sibling${i}`} siblingInfo={sibling} count={i} />
+  //   })
+  // }
+
   const [alumInfo, changeAlumInfo] = useState(alum.alum)
   const date = new Date(alumInfo.birthday)
   date.setDate(date.getDate() + 1)
   const [photoUrl, changePhotoUrl] = useState(alum.photo)
   const [profilePhoto, changeProfilePhoto] = useState(null)
-  const [siblingCount, changeSiblingCount] = useState([])
-  changeSiblingCount(
-    alum.siblings.map((sibling) => (
-      <NewSibling siblingInfo={sibling} count={siblingCount.length + 1} />
-    ))
+  const [siblingCount, changeSiblingCount] = useState(
+    alum.siblings.length > 0 ? siblingRows : []
   )
   const [childCount, changeChildCount] = useState([])
   const [currentDate, setNewDate] = useState(date)
@@ -241,24 +262,56 @@ function EditAlumniModal() {
 
           <Form.Group className="school-attended-checkbox" widths="equal">
             <label>Schools Attended</label>
-            <Checkbox
-              className="semantic-checkbox"
-              label="HILLEL"
-              name="hillel"
-              onChange={handleAlumChange}
-            />
-            <Checkbox
-              className="semantic-checkbox"
-              label="HILI"
-              name="hili"
-              onChange={handleAlumChange}
-            />
-            <Checkbox
-              className="semantic-checkbox"
-              label="HAFTR"
-              name="haftr"
-              onChange={handleAlumChange}
-            />
+            {alumInfo.hillel ? (
+              <Checkbox
+                className="semantic-checkbox"
+                label="HILLEL"
+                name="hillel"
+                onChange={handleAlumChange}
+                defaultChecked
+              />
+            ) : (
+              <Checkbox
+                className="semantic-checkbox"
+                label="HILLEL"
+                name="hillel"
+                onChange={handleAlumChange}
+              />
+            )}
+            {alumInfo.hili ? (
+              <Checkbox
+                className="semantic-checkbox"
+                label="HILI"
+                name="hili"
+                onChange={handleAlumChange}
+                defaultChecked
+              />
+            ) : (
+              <Checkbox
+                className="semantic-checkbox"
+                label="HILI"
+                name="hili"
+                onChange={handleAlumChange}
+              />
+            )}
+
+            {alumInfo.haftr ? (
+              <Checkbox
+                className="semantic-checkbox"
+                label="HAFTR"
+                name="haftr"
+                onChange={handleAlumChange}
+                defaultChecked
+              />
+            ) : (
+              <Checkbox
+                className="semantic-checkbox"
+                label="HAFTR"
+                name="haftr"
+                onChange={handleAlumChange}
+              />
+            )}
+
             <Form.Field style={{ paddingLeft: "40px" }}>
               <label>Birthday</label>
               <SemanticDatepicker
@@ -406,7 +459,7 @@ function EditAlumniModal() {
               Remove Sibling
             </Button>
           ) : null}
-          {siblingCount}
+          {siblingCount.length > 0 ? siblingCount : null}
           <Header as="h3">Schools and Profession</Header>
           <Form.Group widths="equal">
             <Form.Input
@@ -442,12 +495,22 @@ function EditAlumniModal() {
           </Form.Group>
           <Header as="h3">Did you ever attend</Header>
           <Form.Group>
-            <Checkbox
-              className="semantic-checkbox"
-              label="Hillel Day Camp"
-              name="hillelDayAttended"
-              onChange={handleAlumChange}
-            />
+            {alumInfo.hillelDayAttended ? (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Hillel Day Camp"
+                name="hillelDayAttended"
+                onChange={handleAlumChange}
+                defaultChecked
+              />
+            ) : (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Hillel Day Camp"
+                name="hillelDayAttended"
+                onChange={handleAlumChange}
+              />
+            )}
             <Form.Input
               label="Years"
               placeholder="Years"
@@ -455,18 +518,40 @@ function EditAlumniModal() {
               value={alumInfo.hillelDayYears}
               onChange={handleAlumChange}
             />
-            <Checkbox
-              className="semantic-checkbox"
-              label="Camper"
-              name="hillelDayCamper"
-              onChange={handleAlumChange}
-            />
-            <Checkbox
-              className="semantic-checkbox"
-              label="Counselor"
-              name="hillelDayCounselor"
-              onChange={handleAlumChange}
-            />
+
+            {alumInfo.hillelDayCamper ? (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Camper"
+                name="hillelDayCamper"
+                onChange={handleAlumChange}
+                defaultChecked
+              />
+            ) : (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Camper"
+                name="hillelDayCamper"
+                onChange={handleAlumChange}
+              />
+            )}
+
+            {alumInfo.hillelDayCounselor ? (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Counselor"
+                name="hillelDayCounselor"
+                onChange={handleAlumChange}
+                defaultChecked
+              />
+            ) : (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Counselor"
+                name="hillelDayCounselor"
+                onChange={handleAlumChange}
+              />
+            )}
             <Form.Input
               label="Specialty"
               placeholder="Specialty"
@@ -476,12 +561,22 @@ function EditAlumniModal() {
             />
           </Form.Group>
           <Form.Group>
-            <Checkbox
-              className="semantic-checkbox"
-              label="Hillel Sleep Away"
-              name="hillelSleepAttended"
-              onChange={handleAlumChange}
-            />
+            {alumInfo.hillelSleepAttended ? (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Hillel Sleep Away"
+                name="hillelSleepAttended"
+                onChange={handleAlumChange}
+                defaultChecked
+              />
+            ) : (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Hillel Sleep Away"
+                name="hillelSleepAttended"
+                onChange={handleAlumChange}
+              />
+            )}
             <Form.Input
               label="Years"
               placeholder="Years"
@@ -489,18 +584,40 @@ function EditAlumniModal() {
               value={alumInfo.hillelSleepYears}
               onChange={handleAlumChange}
             />
-            <Checkbox
-              className="semantic-checkbox"
-              label="Camper"
-              name="hillelSleepCamper"
-              onChange={handleAlumChange}
-            />
-            <Checkbox
-              className="semantic-checkbox"
-              label="Counselor"
-              name="hillelSleepCounselor"
-              onChange={handleAlumChange}
-            />
+
+            {alumInfo.hillelSleepCamper ? (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Camper"
+                name="hillelSleepCamper"
+                onChange={handleAlumChange}
+                defaultChecked
+              />
+            ) : (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Camper"
+                name="hillelSleepCamper"
+                onChange={handleAlumChange}
+              />
+            )}
+
+            {alumInfo.hillelSleepCounselor ? (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Counselor"
+                name="hillelSleepCounselor"
+                onChange={handleAlumChange}
+                defaultChecked
+              />
+            ) : (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Counselor"
+                name="hillelSleepCounselor"
+                onChange={handleAlumChange}
+              />
+            )}
             <Form.Input
               label="Specialty"
               placeholder="Specialty"
@@ -510,25 +627,63 @@ function EditAlumniModal() {
             />
           </Form.Group>
           <Form.Group>
-            <Checkbox
-              className="semantic-checkbox"
-              label="HILI Day Camp"
-              name="hiliDayAttended"
+            {alumInfo.hiliDayAttended ? (
+              <Checkbox
+                className="semantic-checkbox"
+                label="HILI Day Camp"
+                name="hiliDayAttended"
+                onChange={handleAlumChange}
+                defaultChecked
+              />
+            ) : (
+              <Checkbox
+                className="semantic-checkbox"
+                label="HILI Day Camp"
+                name="hiliDayAttended"
+                onChange={handleAlumChange}
+              />
+            )}
+            <Form.Input
+              label="Years"
+              placeholder="Years"
+              name="hiliDayYears"
+              value={alumInfo.hiliDayYears}
               onChange={handleAlumChange}
             />
-            <Form.Input label="Years" placeholder="Years" name="hiliDayYears" />
-            <Checkbox
-              className="semantic-checkbox"
-              label="Camper"
-              name="hiliDayCamper"
-              onChange={handleAlumChange}
-            />
-            <Checkbox
-              className="semantic-checkbox"
-              label="Counselor"
-              name="hiliDayCounselor"
-              onChange={handleAlumChange}
-            />
+
+            {alumInfo.hiliDayCamper ? (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Camper"
+                name="hiliDayCamper"
+                onChange={handleAlumChange}
+                defaultChecked
+              />
+            ) : (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Camper"
+                name="hiliDayCamper"
+                onChange={handleAlumChange}
+              />
+            )}
+
+            {alumInfo.hiliDayCounselor ? (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Counselor"
+                name="hiliDayCounselor"
+                onChange={handleAlumChange}
+                defaultChecked
+              />
+            ) : (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Counselor"
+                name="hiliDayCounselor"
+                onChange={handleAlumChange}
+              />
+            )}
             <Form.Input
               label="Specialty"
               placeholder="Specialty"
@@ -538,12 +693,22 @@ function EditAlumniModal() {
             />
           </Form.Group>
           <Form.Group>
-            <Checkbox
-              className="semantic-checkbox"
-              label="HILI White Lake"
-              name="hiliWhiteAttended"
-              onChange={handleAlumChange}
-            />
+            {alumInfo.hiliWhiteAttended ? (
+              <Checkbox
+                className="semantic-checkbox"
+                label="HILI White Lake"
+                name="hiliWhiteAttended"
+                onChange={handleAlumChange}
+                defaultChecked
+              />
+            ) : (
+              <Checkbox
+                className="semantic-checkbox"
+                label="HILI White Lake"
+                name="hiliWhiteAttended"
+                onChange={handleAlumChange}
+              />
+            )}
             <Form.Input
               label="Years"
               placeholder="Years"
@@ -551,18 +716,40 @@ function EditAlumniModal() {
               value={alumInfo.hiliWhiteYears}
               onChange={handleAlumChange}
             />
-            <Checkbox
-              className="semantic-checkbox"
-              label="Camper"
-              name="hiliWhiteCamper"
-              onChange={handleAlumChange}
-            />
-            <Checkbox
-              className="semantic-checkbox"
-              label="Counselor"
-              name="hiliWhiteCounselor"
-              onChange={handleAlumChange}
-            />
+
+            {alumInfo.hiliWhiteCamper ? (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Camper"
+                name="hiliWhiteCamper"
+                onChange={handleAlumChange}
+                defaultChecked
+              />
+            ) : (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Camper"
+                name="hiliWhiteCamper"
+                onChange={handleAlumChange}
+              />
+            )}
+
+            {alumInfo.hiliWhiteCounselor ? (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Counselor"
+                name="hiliWhiteCounselor"
+                onChange={handleAlumChange}
+                defaultChecked
+              />
+            ) : (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Counselor"
+                name="hiliWhiteCounselor"
+                onChange={handleAlumChange}
+              />
+            )}
             <Form.Input
               label="Specialty"
               placeholder="Specialty"
@@ -572,12 +759,22 @@ function EditAlumniModal() {
             />
           </Form.Group>
           <Form.Group>
-            <Checkbox
-              className="semantic-checkbox"
-              label="HILI International"
-              name="hiliInternationalAttended"
-              onChange={handleAlumChange}
-            />
+            {alumInfo.hiliInternationalAttended ? (
+              <Checkbox
+                className="semantic-checkbox"
+                label="HILI International"
+                name="hiliInternationalAttended"
+                onChange={handleAlumChange}
+                defaultChecked
+              />
+            ) : (
+              <Checkbox
+                className="semantic-checkbox"
+                label="HILI International"
+                name="hiliInternationalAttended"
+                onChange={handleAlumChange}
+              />
+            )}
             <Form.Input
               label="Years"
               placeholder="Years"
@@ -585,18 +782,40 @@ function EditAlumniModal() {
               value={alumInfo.hiliInternationalYears}
               onChange={handleAlumChange}
             />
-            <Checkbox
-              className="semantic-checkbox"
-              label="Camper"
-              name="hiliInternationalCamper"
-              onChange={handleAlumChange}
-            />
-            <Checkbox
-              className="semantic-checkbox"
-              label="Counselor"
-              name="hiliInternationalCounselor"
-              onChange={handleAlumChange}
-            />
+
+            {alumInfo.hiliInternationalCamper ? (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Camper"
+                name="hiliInternationalCamper"
+                onChange={handleAlumChange}
+                defaultChecked
+              />
+            ) : (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Camper"
+                name="hiliInternationalCamper"
+                onChange={handleAlumChange}
+              />
+            )}
+
+            {alumInfo.hiliInternationalCounselor ? (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Counselor"
+                name="hiliInternationalCounselor"
+                onChange={handleAlumChange}
+                defaultChecked
+              />
+            ) : (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Counselor"
+                name="hiliInternationalCounselor"
+                onChange={handleAlumChange}
+              />
+            )}
             <Form.Input
               label="Specialty"
               placeholder="Specialty"
@@ -630,24 +849,56 @@ function EditAlumniModal() {
           {childCount}
           <Header as="h3">Past or Current?</Header>
           <Form.Group>
-            <Checkbox
-              className="semantic-checkbox"
-              label="Class Parent"
-              name="classParent"
-              onChange={handleAlumChange}
-            />
-            <Checkbox
-              className="semantic-checkbox"
-              label="Board of Trustees"
-              name="boardTrustee"
-              onChange={handleAlumChange}
-            />
-            <Checkbox
-              className="semantic-checkbox"
-              label="Board of Education"
-              name="boardEducation"
-              onChange={handleAlumChange}
-            />
+            {alumInfo.classParent ? (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Class Parent"
+                name="classParent"
+                onChange={handleAlumChange}
+                defaultChecked
+              />
+            ) : (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Class Parent"
+                name="classParent"
+                onChange={handleAlumChange}
+              />
+            )}
+
+            {alumInfo.boardTrustee ? (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Board of Trustees"
+                name="boardTrustee"
+                onChange={handleAlumChange}
+                defaultChecked
+              />
+            ) : (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Board of Trustees"
+                name="boardTrustee"
+                onChange={handleAlumChange}
+              />
+            )}
+
+            {alumInfo.boardEducation ? (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Board of Education"
+                name="boardEducation"
+                onChange={handleAlumChange}
+                defaultChecked
+              />
+            ) : (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Board of Education"
+                name="boardEducation"
+                onChange={handleAlumChange}
+              />
+            )}
             <Form.Input
               label="Enter any committees, separated by commas"
               placeholder="Committees"
@@ -658,50 +909,125 @@ function EditAlumniModal() {
           </Form.Group>
           <Header as="h3">Willing to work on:</Header>
           <Form.Group widths="equal">
-            <Checkbox
-              className="semantic-checkbox"
-              label="Alumni Newsletters"
-              name="alumniNewsletters"
-              onChange={handleAlumChange}
-            />
-            <Checkbox
-              className="semantic-checkbox"
-              label="Communications and Outreach"
-              name="commsOutreach"
-              onChange={handleAlumChange}
-            />
-            <Checkbox
-              className="semantic-checkbox"
-              label="Class Reunions"
-              name="classReunions"
-              onChange={handleAlumChange}
-            />
-            <Checkbox
-              className="semantic-checkbox"
-              label="Coordinating and or Hosting Alumni Events"
-              name="alumniEvents"
-              onChange={handleAlumChange}
-            />
+            {alumInfo.alumniNewsletters ? (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Alumni Newsletters"
+                name="alumniNewsletters"
+                onChange={handleAlumChange}
+                defaultChecked
+              />
+            ) : (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Alumni Newsletters"
+                name="alumniNewsletters"
+                onChange={handleAlumChange}
+              />
+            )}
+
+            {alumInfo.commsOutreach ? (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Communications and Outreach"
+                name="commsOutreach"
+                onChange={handleAlumChange}
+                defaultChecked
+              />
+            ) : (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Communications and Outreach"
+                name="commsOutreach"
+                onChange={handleAlumChange}
+              />
+            )}
+
+            {alumInfo.classReunions ? (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Class Reunions"
+                name="classReunions"
+                onChange={handleAlumChange}
+                defaultChecked
+              />
+            ) : (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Class Reunions"
+                name="classReunions"
+                onChange={handleAlumChange}
+              />
+            )}
+
+            {alumInfo.alumniEvents ? (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Coordinating and or Hosting Alumni Events"
+                name="alumniEvents"
+                onChange={handleAlumChange}
+                defaultChecked
+              />
+            ) : (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Coordinating and or Hosting Alumni Events"
+                name="alumniEvents"
+                onChange={handleAlumChange}
+              />
+            )}
           </Form.Group>
           <Form.Group widths="equal">
-            <Checkbox
-              className="semantic-checkbox"
-              label="Fundraising and Networking Initiatives"
-              name="fundraisingNetworking"
-              onChange={handleAlumChange}
-            />
-            <Checkbox
-              className="semantic-checkbox"
-              label="Database Research"
-              name="databaseReasearch"
-              onChange={handleAlumChange}
-            />
-            <Checkbox
-              className="semantic-checkbox"
-              label="Alumni Choir"
-              name="alumniChoir"
-              onChange={handleAlumChange}
-            />
+            {alumInfo.fundraisingNetworking ? (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Fundraising and Networking Initiatives"
+                name="fundraisingNetworking"
+                onChange={handleAlumChange}
+                defaultChecked
+              />
+            ) : (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Fundraising and Networking Initiatives"
+                name="fundraisingNetworking"
+                onChange={handleAlumChange}
+              />
+            )}
+
+            {alumInfo.databaseResearch ? (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Database Research"
+                name="databaseResearch"
+                onChange={handleAlumChange}
+                defaultChecked
+              />
+            ) : (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Database Research"
+                name="databaseResearch"
+                onChange={handleAlumChange}
+              />
+            )}
+
+            {alumInfo.alumniChoir ? (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Alumni Choir"
+                name="alumniChoir"
+                onChange={handleAlumChange}
+                defaultChecked
+              />
+            ) : (
+              <Checkbox
+                className="semantic-checkbox"
+                label="Alumni Choir"
+                name="alumniChoir"
+                onChange={handleAlumChange}
+              />
+            )}
           </Form.Group>
           <Header as="h3">Profile Picture:</Header>
           <Form.Input

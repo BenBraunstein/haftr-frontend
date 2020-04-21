@@ -15,6 +15,7 @@ export default function NewSibling(props) {
           [`sibling${props.count}School`]: "",
         }
   )
+  debugger
 
   const handleChange = (e) => {
     changeFormInfo({
@@ -36,14 +37,14 @@ export default function NewSibling(props) {
         label="Year Finished"
         placeholder="Year Finished"
         name={`sibling${props.count}Year`}
-        value={formInfo.yearFinished}
+        value={formInfo[`sibling${props.count}Year`]}
         onChange={handleChange}
       />
       <Form.Input
         label="School"
         placeholder="School"
         name={`sibling${props.count}School`}
-        value={formInfo.school}
+        value={formInfo[[`sibling${props.count}School`]]}
         onChange={handleChange}
       />
     </Form.Group>
