@@ -3,7 +3,7 @@ import { Modal, Button, Form, Checkbox, Header } from "semantic-ui-react"
 import SemanticDatepicker from "react-semantic-ui-datepickers"
 import "react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css"
 import { useDispatch, useSelector } from "react-redux"
-import { addAlum, stopEditAlum, deleteAlum } from "./actions"
+import { stopEditAlum, deleteAlum, adjustAlum } from "./actions"
 import NewSibling from "./NewSibling"
 import NewChild from "./NewChild"
 import alertify from "alertifyjs"
@@ -160,8 +160,8 @@ function EditAlumniModal() {
       formData.append("alumni[photo]", profilePhoto)
     }
 
-    fetch(`${state.fetchUrl}/alumnis`, {
-      method: "POST",
+    fetch(`${state.fetchUrl}/alumnis/${alumInfo.id}`, {
+      method: "PATCH",
       body: formData,
     })
       .then((resp) => resp.json())
@@ -176,11 +176,11 @@ function EditAlumniModal() {
         })
           .then((resp) => resp.json())
           .then((alumUpdate) => {
-            dispatch(addAlum(alumUpdate))
+            dispatch(adjustAlum(alumUpdate))
             modalClose()
             alertify.set("notifier", "position", "bottom-left")
             alertify.success(
-              `You've added ${alumUpdate.alum.firstName} ${alumUpdate.alum.lastName}!`
+              `You've updated ${alumUpdate.alum.firstName} ${alumUpdate.alum.lastName}!`
             )
           })
       })

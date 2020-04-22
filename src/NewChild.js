@@ -36,6 +36,7 @@ export default function NewChild(props) {
         placeholder="Grade or Year Finished"
         name={`child${props.count}currentGradeOrYearGraduated`}
         value={formInfo[`child${props.count}currentGradeOrYearGraduated`]}
+        onChange={handleChange}
       />
     </Form.Group>
   )

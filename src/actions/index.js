@@ -39,6 +39,13 @@ const deleteAlum = (alum) => {
   }
 }
 
+const adjustAlum = (alum) => {
+  return {
+    type: "ADJUST_ALUM",
+    payload: alum,
+  }
+}
+
 export {
   fetchAlumni,
   updateSearchText,
@@ -46,4 +53,5 @@ export {
   editAlum,
   stopEditAlum,
   deleteAlum,
+  adjustAlum,
 }
