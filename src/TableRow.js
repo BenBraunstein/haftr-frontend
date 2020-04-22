@@ -17,7 +17,6 @@ function TableRow(props) {
   }
 
   const doubleClickedRow = (alum) => {
-    console.log(alum)
     dispatch(editAlum(alum))
   }
 
