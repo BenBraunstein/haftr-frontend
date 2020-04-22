@@ -35,7 +35,7 @@ function EditAlumniModal() {
   const handleEditAlumSubmit = (e) => {
     e.preventDefault()
     dispatch(adjustLoading(0))
-
+    const alum = state.alumEditing
     const form = e.target
     // Grab all siblings and their info
     let siblingInfo = []
@@ -60,10 +60,59 @@ function EditAlumniModal() {
       }
     }
 
+    let missingSiblings = []
+    // let newSiblings = []
+    let missingChildren = []
+    // let newChildren = []
+
+    if (siblingInfo.length <= 0) {
+      missingSiblings = alum.siblings
+    }
+    for (let i = 0; i < alum.siblings.length; i++) {
+      for (let j = 0; j < siblingInfo.length; j++) {
+        if (
+          alum.siblings[i].name !== siblingInfo[j].name ||
+          alum.siblings[i].year !== siblingInfo[j].year
+        ) {
+          missingSiblings.push(alum.siblings[i])
+        }
+      }
+    }
+
+    if (childrenInfo.length <= 0) {
+      missingChildren = alum.children
+    }
+    for (let i = 0; i < alum.children.length; i++) {
+      for (let j = 0; j < childrenInfo.length; j++) {
+        if (
+          alum.children[i].name !== childrenInfo[j].name ||
+          alum.children[i].year !== childrenInfo[j].year
+        ) {
+          missingChildren.push(alum.children[i])
+        }
+      }
+    }
+
     const siblingsChildren = {
       siblings: siblingInfo,
       children: childrenInfo,
     }
+    missingSiblings.forEach((sibling) => {
+      fetch(`${state.fetchUrl}/siblings/${sibling.id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+    })
+    missingChildren.forEach((child) => {
+      fetch(`${state.fetchUrl}/children/${child.id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+    })
 
     let formData = new FormData()
     formData.append("alumni[hillel]", form.hillel.checked)
