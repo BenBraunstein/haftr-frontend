@@ -207,7 +207,11 @@ function EditAlumniModal() {
   }
 
   const handleAlumChange = (e) => {
-    if (e.target.type === "text") {
+    if (
+      e.target.type === "text" ||
+      e.target.type === "email" ||
+      e.target.type === "tel"
+    ) {
       changeAlumInfo({ ...alumInfo, [e.target.name]: e.target.value })
     } else if (e.target.previousSibling.type === "checkbox") {
       changeAlumInfo({ ...alumInfo, [e.target.name]: !e.target.checked })

@@ -18,7 +18,6 @@ const rootReducer = (state = defaultState, action) => {
       return {...state, allAlumni: newAlumniList}
     // prettier-ignore
     case "ADJUST_ALUM":
-      debugger
       const theOneAlum = state.allAlumni.find(alum => alum.alum.id === action.payload.alum.id)
       const index = state.allAlumni.indexOf(theOneAlum)
       const newAllAlumni = state.allAlumni.filter(alum => alum.alum.id !== action.payload.alum.id)
