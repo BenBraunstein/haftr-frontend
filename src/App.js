@@ -1,10 +1,11 @@
 import React, { useEffect } from "react"
 import "./App.css"
 import { useSelector, useDispatch } from "react-redux"
-import { fetchAlumni } from "./actions"
+import { fetchAlumni, adjustLoading } from "./actions"
 import AlumniTable from "./AlumniTable"
 import NavBar from "./NavBar"
 import EditAlumniModal from "./EditAlumniModal"
+var Spinner = require("react-spinkit")
 
 function App() {
   let state = useSelector((state) => state)
@@ -15,17 +16,23 @@ function App() {
       .then((resp) => resp.json())
       .then((data) => {
         dispatch(fetchAlumni(data))
+        dispatch(adjustLoading(100))
       })
   }, [state.fetchUrl, dispatch])
 
   return (
-    <div className="App">
-      <NavBar />
-      {state.editModalOpen ? <EditAlumniModal /> : null}
-
-      <br />
-      <br />
-      <AlumniTable />
+    <div>
+      {state.loadingPercent < 100 ? (
+        <Spinner name="wandering-cubes" className="loading" />
+      ) : (
+        <div className="App">
+          <NavBar />
+          {state.editModalOpen ? <EditAlumniModal /> : null}
+          <br />
+          <br />
+          <AlumniTable />
+        </div>
+      )}
     </div>
   )
 }

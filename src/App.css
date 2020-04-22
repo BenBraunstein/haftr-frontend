@@ -50,3 +50,8 @@
 #delete-alum-button {
   float: right;
 }
+
+.loading {
+  margin: auto;
+  margin-top: 40vh;
+}

@@ -23,6 +23,8 @@ const rootReducer = (state = defaultState, action) => {
       const newAllAlumni = state.allAlumni.filter(alum => alum.alum.id !== action.payload.alum.id)
       newAllAlumni.splice(index, 0, action.payload)
       return {...state, allAlumni: newAllAlumni }
+    case "ADJUST_LOADING":
+      return { ...state, loadingPercent: action.payload }
     default:
       return state
   }

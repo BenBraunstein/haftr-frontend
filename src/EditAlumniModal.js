@@ -3,7 +3,7 @@ import { Modal, Button, Form, Checkbox, Header } from "semantic-ui-react"
 import SemanticDatepicker from "react-semantic-ui-datepickers"
 import "react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css"
 import { useDispatch, useSelector } from "react-redux"
-import { stopEditAlum, deleteAlum, adjustAlum } from "./actions"
+import { stopEditAlum, deleteAlum, adjustAlum, adjustLoading } from "./actions"
 import NewSibling from "./NewSibling"
 import NewChild from "./NewChild"
 import alertify from "alertifyjs"
@@ -34,6 +34,8 @@ function EditAlumniModal() {
 
   const handleEditAlumSubmit = (e) => {
     e.preventDefault()
+    dispatch(adjustLoading(0))
+
     const form = e.target
     // Grab all siblings and their info
     let siblingInfo = []
@@ -178,6 +180,7 @@ function EditAlumniModal() {
           .then((alumUpdate) => {
             dispatch(adjustAlum(alumUpdate))
             modalClose()
+            dispatch(adjustLoading(100))
             alertify.set("notifier", "position", "bottom-left")
             alertify.success(
               `You've updated ${alumUpdate.alum.firstName} ${alumUpdate.alum.lastName}!`

@@ -4,6 +4,7 @@ const defaultState = {
   searchBarText: "",
   alumEditing: {},
   editModalOpen: false,
+  loadingPercent: 0,
 }
 
 export default defaultState

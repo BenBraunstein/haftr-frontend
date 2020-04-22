@@ -46,6 +46,13 @@ const adjustAlum = (alum) => {
   }
 }
 
+const adjustLoading = (percent) => {
+  return {
+    type: "ADJUST_LOADING",
+    payload: percent,
+  }
+}
+
 export {
   fetchAlumni,
   updateSearchText,
@@ -54,4 +61,5 @@ export {
   stopEditAlum,
   deleteAlum,
   adjustAlum,
+  adjustLoading,
 }

@@ -11,7 +11,7 @@ import {
 import SemanticDatepicker from "react-semantic-ui-datepickers"
 import "react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css"
 import { useDispatch, useSelector } from "react-redux"
-import { addAlum } from "./actions"
+import { addAlum, adjustLoading } from "./actions"
 import NewSibling from "./NewSibling"
 import NewChild from "./NewChild"
 import alertify from "alertifyjs"
@@ -46,6 +46,7 @@ function NewAlumniModal(props) {
 
   const handleNewAlumSubmit = (e) => {
     e.preventDefault()
+    dispatch(adjustLoading(0))
     const form = e.target
     // Grab all siblings and their info
     let siblingInfo = []
@@ -94,6 +95,10 @@ function NewAlumniModal(props) {
     formData.append("alumni[emailAddress]", form.emailAddress.value)
     formData.append("alumni[clubs]", form.clubs.value)
     formData.append("alumni[awards]", form.awards.value)
+    formData.append("alumni[israelSchool]", form.israelSchool.value)
+    formData.append("alumni[collegeAttended]", form.collegeAttended.value)
+    formData.append("alumni[gradSchool]", form.gradSchool.value)
+    formData.append("alumni[profession]", form.profession.value)
     formData.append("alumni[hillelDayAttended]", form.hillelDayAttended.checked)
     formData.append(
       "alumni[hillelSleepAttended]",
@@ -184,6 +189,7 @@ function NewAlumniModal(props) {
           .then((resp) => resp.json())
           .then((alumUpdate) => {
             dispatch(addAlum(alumUpdate))
+            dispatch(adjustLoading(100))
             modalClose()
             alertify.set("notifier", "position", "bottom-left")
             alertify.success(
