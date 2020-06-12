@@ -5,6 +5,7 @@ import { fetchAlumni, adjustLoading } from "./actions"
 import AlumniTable from "./AlumniTable"
 import NavBar from "./NavBar"
 import EditAlumniModal from "./EditAlumniModal"
+import Signup from "./Signup"
 var Spinner = require("react-spinkit")
 
 function App() {
@@ -22,7 +23,7 @@ function App() {
 
   return (
     <div>
-      {state.loadingPercent < 100 ? (
+      {/* {state.loadingPercent < 100 ? (
         <Spinner name="wandering-cubes" className="loading" />
       ) : (
         <div className="App">
@@ -31,8 +32,13 @@ function App() {
           <br />
           <br />
           <AlumniTable />
-        </div>
-      )}
+          </div>
+        )} */}
+      <NavBar />
+      {state.editModalOpen ? <EditAlumniModal /> : null}
+      <br />
+      <br />
+      <Signup />
     </div>
   )
 }

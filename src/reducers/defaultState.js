@@ -1,6 +1,6 @@
 const defaultState = {
   allAlumni: [],
-  fetchUrl: "https://haftr-alumni-api.herokuapp.com",
+  fetchUrl: "http://localhost:3000",
   searchBarText: "",
   alumEditing: {},
   editModalOpen: false,
