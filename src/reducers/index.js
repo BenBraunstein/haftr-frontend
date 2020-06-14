@@ -25,6 +25,8 @@ const rootReducer = (state = defaultState, action) => {
       return {...state, allAlumni: newAllAlumni }
     case "ADJUST_LOADING":
       return { ...state, loadingPercent: action.payload }
+    case "LOGIN_USER":
+      return { ...state, currentUser: action.payload }
     default:
       return state
   }

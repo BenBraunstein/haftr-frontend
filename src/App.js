@@ -6,6 +6,7 @@ import AlumniTable from "./AlumniTable"
 import NavBar from "./NavBar"
 import EditAlumniModal from "./EditAlumniModal"
 import Signup from "./Signup"
+import Login from "./Login"
 var Spinner = require("react-spinkit")
 
 function App() {

@@ -5,6 +5,7 @@ const defaultState = {
   alumEditing: {},
   editModalOpen: false,
   loadingPercent: 0,
+  currentUser: {},
 }
 
 export default defaultState

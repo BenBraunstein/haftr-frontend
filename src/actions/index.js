@@ -53,6 +53,13 @@ const adjustLoading = (percent) => {
   }
 }
 
+const loginUser = (user) => {
+  return {
+    type: "LOGIN_USER",
+    payload: user,
+  }
+}
+
 export {
   fetchAlumni,
   updateSearchText,
@@ -62,4 +69,5 @@ export {
   deleteAlum,
   adjustAlum,
   adjustLoading,
+  loginUser,
 }
