@@ -36,7 +36,6 @@ export default function Signup() {
     })
       .then((resp) => resp.json())
       .then((data) => {
-        console.log(data)
         if (data.error) {
           alertify.error(data.error)
           return
@@ -72,10 +71,9 @@ export default function Signup() {
         </Form.Field>
         <Button type="submit">Submit</Button>
       </Form>
-      <center>
-        <Header as="h3">Already have an account?</Header>
-        <Button>Login</Button>
-      </center>
+      <br />
+      <Header as="h3">Already have an account?</Header>
+      <Button onClick={() => state.history.push("/login")}>Login</Button>
     </div>
   )
 }

@@ -60,6 +60,13 @@ const loginUser = (user) => {
   }
 }
 
+const setHistory = (hist) => {
+  return {
+    type: "SET_HISTORY",
+    payload: hist,
+  }
+}
+
 export {
   fetchAlumni,
   updateSearchText,
@@ -70,4 +77,5 @@ export {
   adjustAlum,
   adjustLoading,
   loginUser,
+  setHistory,
 }

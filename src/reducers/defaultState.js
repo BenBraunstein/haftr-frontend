@@ -6,6 +6,7 @@ const defaultState = {
   editModalOpen: false,
   loadingPercent: 0,
   currentUser: {},
+  history: {},
 }
 
 export default defaultState

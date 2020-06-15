@@ -24,14 +24,13 @@ export default function Signup() {
     })
       .then((resp) => resp.json())
       .then((data) => {
-        console.log(data)
         if (data.error) {
           alertify.error(data.error)
           return
         }
         localStorage.setItem("token", data.token)
         dispatch(loginUser(data.user))
-        alertify.success(`Welcome ${data.user.email}!`)
+        alertify.success(`Welcome ${data.user.info.email}!`)
       })
   }
 
@@ -49,10 +48,9 @@ export default function Signup() {
         </Form.Field>
         <Button type="submit">Submit</Button>
       </Form>
-      <center>
-        <Header as="h3">Need an account?</Header>
-        <Button>Sign Up</Button>
-      </center>
+      <br />
+      <Header as="h3">Need an account?</Header>
+      <Button onClick={() => state.history.push("/signup")}>Sign Up</Button>
     </div>
   )
 }
