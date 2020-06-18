@@ -27,6 +27,8 @@ const rootReducer = (state = defaultState, action) => {
       return { ...state, loadingPercent: action.payload }
     case "LOGIN_USER":
       return { ...state, currentUser: action.payload }
+    case "LOGOUT_USER":
+      return { ...state, currentUser: {} }
     case "SET_HISTORY":
       return { ...state, history: action.payload }
     default:

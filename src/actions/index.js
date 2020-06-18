@@ -60,6 +60,12 @@ const loginUser = (user) => {
   }
 }
 
+const logoutUser = () => {
+  return {
+    type: "LOGOUT_USER",
+  }
+}
+
 const setHistory = (hist) => {
   return {
     type: "SET_HISTORY",
@@ -77,5 +83,6 @@ export {
   adjustAlum,
   adjustLoading,
   loginUser,
+  logoutUser,
   setHistory,
 }
