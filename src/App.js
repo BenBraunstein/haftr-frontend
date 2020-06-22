@@ -8,7 +8,7 @@ import NavBar from "./NavBar"
 import EditAlumniModal from "./EditAlumniModal"
 import Signup from "./Signup"
 import Login from "./Login"
-import alertify from "alertifyjs"
+import ProfileCard from "./ProfileCard"
 var Spinner = require("react-spinkit")
 
 function App() {
@@ -56,6 +56,7 @@ function App() {
           <Switch>
             <Route path="/login" render={() => <Login />} />
             <Route path="/signup" render={() => <Signup />} />
+            <Route path="/profile" render={() => <ProfileCard />} />
             <Route path="/alumni" render={() => <AlumniTable />} />
           </Switch>
         </div>

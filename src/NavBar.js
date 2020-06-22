@@ -2,7 +2,6 @@ import React from "react"
 import { Menu, Input } from "semantic-ui-react"
 import { useDispatch, useSelector } from "react-redux"
 import { updateSearchText, logoutUser } from "./actions"
-import NewAlumniModal from "./NewAlumniModal"
 import haftrLogo from "./haftr-logo.jpg"
 import hiliLogo from "./hili-logo.jpg"
 import hillelLogo from "./hillel-logo.jpg"
@@ -25,11 +24,15 @@ function NavBar() {
             <img src={hillelLogo} alt="haftr-logo" style={{ height: "30px" }} />
           </Menu.Item>
           {Object.keys(state.currentUser).length === 0 ? null : (
-            <Menu.Item name="profile">Your Profile</Menu.Item>
+            <Menu.Item
+              name="profile"
+              onClick={() => state.history.push("/profile")}
+            >
+              Your Profile
+            </Menu.Item>
           )}
         </Menu.Menu>
         {/* Will appear as Nav Button */}
-        {/* {<NewAlumniModal fromNav />} */}
         {Object.keys(state.currentUser).length === 0 ? (
           <Menu.Menu position="right">
             <Menu.Item

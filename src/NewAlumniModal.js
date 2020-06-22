@@ -1,13 +1,5 @@
 import React, { useState } from "react"
-import {
-  Modal,
-  Menu,
-  Button,
-  Form,
-  Checkbox,
-  Header,
-  Icon,
-} from "semantic-ui-react"
+import { Modal, Button, Form, Checkbox, Header, Icon } from "semantic-ui-react"
 import SemanticDatepicker from "react-semantic-ui-datepickers"
 import "react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css"
 import { useDispatch, useSelector } from "react-redux"
@@ -171,6 +163,7 @@ function NewAlumniModal(props) {
     if (profilePhoto) {
       formData.append("alumni[photo]", profilePhoto)
     }
+    formData.append("alumni[user_id]", state.currentUser.info.id)
 
     fetch(`${state.fetchUrl}/alumnis`, {
       method: "POST",
@@ -217,10 +210,12 @@ function NewAlumniModal(props) {
     <Modal
       open={modalOpen}
       trigger={
-        props.fromNav ? (
-          <Menu.Item name="new_alum" onClick={() => changeModalOpen(true)}>
-            New Alumni
-          </Menu.Item>
+        props ? (
+          props.fromNewProfile ? (
+            <Button onClick={() => changeModalOpen(true)}>
+              Create your profile
+            </Button>
+          ) : null
         ) : (
           <Button
             floated="right"

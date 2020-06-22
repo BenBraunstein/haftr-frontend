@@ -61,9 +61,7 @@ function EditAlumniModal() {
     }
 
     let missingSiblings = []
-    // let newSiblings = []
     let missingChildren = []
-    // let newChildren = []
 
     if (siblingInfo.length <= 0) {
       missingSiblings = alum.siblings

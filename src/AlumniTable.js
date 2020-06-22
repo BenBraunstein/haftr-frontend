@@ -7,8 +7,10 @@ const sortBy = require("sort-by")
 
 function AlumniTable() {
   let state = useSelector((state) => state)
-  if (state.currentUser.info.admin !== true) {
-    state.history.push("/login")
+  if (Object.keys(state.currentUser).length === 0) {
+    if (state.currentUser.info.admin) {
+      state.history.push("/login")
+    }
   }
 
   const [nameSort, changeNameDirection] = useState("none")

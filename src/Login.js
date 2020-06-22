@@ -31,6 +31,7 @@ export default function Signup() {
         localStorage.setItem("token", data.token)
         dispatch(loginUser(data.user))
         alertify.success(`Welcome ${data.user.info.email}!`)
+        state.history.push("/profile")
       })
   }
 
