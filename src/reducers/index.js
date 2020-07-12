@@ -22,7 +22,7 @@ const rootReducer = (state = defaultState, action) => {
       const index = state.allAlumni.indexOf(theOneAlum)
       const newAllAlumni = state.allAlumni.filter(alum => alum.alum.id !== action.payload.alum.id)
       newAllAlumni.splice(index, 0, action.payload)
-      return {...state, allAlumni: newAllAlumni }
+      return {...state, allAlumni: newAllAlumni, currentUser: {info: state.currentUser.info, ...action.payload} }
     case "ADJUST_LOADING":
       return { ...state, loadingPercent: action.payload }
     case "LOGIN_USER":
